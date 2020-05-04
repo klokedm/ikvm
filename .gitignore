@@ -45,3 +45,5 @@ runtime/*.jar
 runtime/*.dll
 tools/*.exe
 tools/*.dll
+*.sqlite
+/.vs
