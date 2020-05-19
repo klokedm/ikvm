@@ -183,14 +183,14 @@ namespace IKVM.Internal
 		{
 			bool declarativeSecurity;
 			CustomAttributeBuilder cab = CreateCustomAttribute(loader, attr, out declarativeSecurity);
-			if (declarativeSecurity)
+			/*if (declarativeSecurity)
 			{
 				tb.__AddDeclarativeSecurity(cab);
 			}
 			else
-			{
+			{*/
 				tb.SetCustomAttribute(cab);
-			}
+			//}
 		}
 
 		internal static void SetCustomAttribute(ClassLoaderWrapper loader, FieldBuilder fb, IKVM.Internal.MapXml.Attribute attr)
@@ -207,14 +207,14 @@ namespace IKVM.Internal
 		{
 			bool declarativeSecurity;
 			CustomAttributeBuilder cab = CreateCustomAttribute(loader, attr, out declarativeSecurity);
-			if (declarativeSecurity)
+			/*if (declarativeSecurity)
 			{
 				mb.__AddDeclarativeSecurity(cab);
 			}
 			else
-			{
+			{*/
 				mb.SetCustomAttribute(CreateCustomAttribute(loader, attr));
-			}
+			//}
 		}
 
 		internal static void SetCustomAttribute(ClassLoaderWrapper loader, PropertyBuilder pb, IKVM.Internal.MapXml.Attribute attr)
@@ -2065,9 +2065,10 @@ namespace IKVM.Internal
 
 		private static bool IsForbiddenTypeParameterType(Type type)
 		{
+			//TODO: Should we update this?
 			// these are the types that may not be used as a type argument when instantiating a generic type
 			return type == Types.Void
-				|| type == JVM.Import(typeof(ArgIterator))
+				//|| type == JVM.Import(typeof(ArgIterator))
 				|| type == JVM.Import(typeof(RuntimeArgumentHandle))
 				|| type == JVM.Import(typeof(TypedReference))
 				|| type.ContainsGenericParameters

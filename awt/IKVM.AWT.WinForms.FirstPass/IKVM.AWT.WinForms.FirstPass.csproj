@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <OutputPath>..\..\bin\$(Configuration)</OutputPath>
     <DefineConstants>$(DefineConstants);FIRST_PASS</DefineConstants>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -14,11 +14,6 @@
     <AssemblyTitle>IKVM.NET AWT Support</AssemblyTitle>
     <Description>Winforms peers and 'native' code</Description>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -34,11 +29,8 @@
     <InternalsVisibleTo Include="IKVM.OpenJDK.SwingAWT" />
   </ItemGroup>
 
-  <Target Name="AddAllowPartiallyTrustedCallers" BeforeTargets="Build">
-    <!-- Handle AllowPartiallyTrustedCallers (.NET Framework only) -->
-    <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
-      <AssemblyAttribute Include="System.Security.AllowPartiallyTrustedCallers" />
-    </ItemGroup>
-  </Target>
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
 
 </Project>

@@ -1461,7 +1461,8 @@ namespace IKVM.Internal
 						PermissionSet permSet;
 						if (MakeDeclSecurity(type, annotation, out action, out permSet))
 						{
-							tb.AddDeclarativeSecurity(action, permSet);
+							//tb.AddDeclarativeSecurity(action, permSet);
+							throw new InvalidOperationException("Not Supported on .NET Core");
 						}
 #endif
 					}
@@ -1483,7 +1484,8 @@ namespace IKVM.Internal
 						PermissionSet permSet;
 						if (MakeDeclSecurity(type, annotation, out action, out permSet))
 						{
-							mb.AddDeclarativeSecurity(action, permSet);
+							//mb.AddDeclarativeSecurity(action, permSet);
+							throw new InvalidOperationException("Not Supported on .NET Core");
 						}
 #endif
 					}

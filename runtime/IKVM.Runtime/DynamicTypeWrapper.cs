@@ -7021,7 +7021,7 @@ namespace IKVM.Internal
 			MethodBuilder mbld = mb as MethodBuilder;
 			if (mbld != null)
 			{
-				return mbld.GetToken().Token;
+				return mbld.GetMetadataToken();
 			}
 			return mb.MetadataToken;
 		}
