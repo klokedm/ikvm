@@ -19,7 +19,7 @@
 
   Jeroen Frijters
   jeroen@frijters.net
-  
+
 */
 using System;
 using System.Diagnostics;
@@ -131,8 +131,22 @@ static class Java_java_io_FileDescriptor
 		}
 		else if (fileMode == FileMode.Append)
 		{
+#if NETFRAMEWORK
 			// this is the way to get atomic append behavior for all writes
 			return new FileStream(name, fileMode, FileSystemRights.AppendData, FileShare.ReadWrite, 1, FileOptions.None);
+#else
+			// TODO NET_CORE_INCOMPAT
+			// TODO NET_STANDARD_INCOMPAT
+			//
+			// https://github.com/dotnet/corefx/issues/39920
+			// https://github.com/dotnet/runtime/issues/30435#issuecomment-590609103
+#if !FIRST_PASS
+			throw new java.lang.UnsupportedOperationException(
+				"Atomically appending to files is not supported.");
+#else
+			throw new NotSupportedException("Atomically appending to files is not supported.");
+#endif
+#endif
 		}
 		else
 		{

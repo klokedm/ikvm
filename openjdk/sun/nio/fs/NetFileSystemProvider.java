@@ -31,6 +31,7 @@ import cli.System.IO.DirectoryInfo;
 import cli.System.IO.DriveInfo;
 import cli.System.IO.File;
 import cli.System.IO.FileAttributes;
+import cli.System.IO.FileAccess;
 import cli.System.IO.FileInfo;
 import cli.System.IO.FileMode;
 import cli.System.IO.FileShare;
@@ -309,7 +310,7 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
         {
             throw new IllegalArgumentException("READ + APPEND not allowed");
         }
-        
+
         if (truncate)
         {
             if (append)
@@ -321,7 +322,7 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
                 mode = FileMode.Truncate;
             }
         }
-        
+
         int rights = 0;
         if (append)
         {
@@ -371,7 +372,31 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
             if (false) throw new cli.System.IO.IOException();
             if (false) throw new cli.System.Security.SecurityException();
             if (false) throw new cli.System.UnauthorizedAccessException();
-            return FileDescriptor.fromStream(new FileStream(path, FileMode.wrap(mode), FileSystemRights.wrap(rights), FileShare.wrap(share), 8, FileOptions.wrap(options)));
+            // TODO NET_CORE_INCOMPAT
+            // TODO NET_STANDARD_INCOMPAT
+            //
+            // https://github.com/dotnet/corefx/issues/39920
+            // https://github.com/dotnet/runtime/issues/30435#issuecomment-590609103
+            if ((rights & FileSystemRights.AppendData) == FileSystemRights.AppendData)
+            {
+                throw new UnsupportedOperationException(
+                    "Atomically appending to files is not supported.");
+            }
+
+            boolean readOnly    = rights == FileSystemRights.Read;
+            boolean writeOnly   = rights == FileSystemRights.Write;
+            int     access      = readOnly  ? FileAccess.Read   :
+                                  writeOnly ? FileAccess.Write  :
+                                              FileAccess.ReadWrite;
+
+            return FileDescriptor.fromStream(
+                new FileStream(
+                    path,
+                    FileMode.wrap(mode),
+                    FileAccess.wrap(access),
+                    FileShare.wrap(share),
+                    8,
+                    FileOptions.wrap(options)));
         }
         catch (cli.System.ArgumentException x)
         {
@@ -900,7 +925,7 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
         public String type()
         {
             return type;
-        }        
+        }
 
         public String toString()
         {
