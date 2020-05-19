@@ -31,7 +31,7 @@
     <property name="IMPLEMENTATION_VERSION" value="1.8.0" />
     <property name="SPECIFICATION_VERSION" value="1.8" />
     <property name="FULL_VERSION" value="1.8.0_45-b14" />
-    <property name="OpenJDK.dir" value="${project::get-base-directory()}/../../openjdk-8u45-b14" />
+    <property name="OpenJDK.dir" value="${project::get-base-directory()}/../openjdk/openjdk-8u45-b14" />
     <if test="${platform::is-win32()}">
         <property name="pathsep" value=";" />
     </if>
