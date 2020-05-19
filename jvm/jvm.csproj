@@ -21,8 +21,8 @@
 
   <Target Name="RunBuild" BeforeTargets="CoreCompile">
     <Copy SourceFiles="..\bin\$(Configuration)\$(TargetFramework)\IKVM.Reflection.dll" DestinationFolder="..\tools\bin\$(Configuration)\$(TargetFramework)" />
-    <Exec Command="..\tools\bin\$(Configuration)\$(TargetFramework)\implib.exe jvm.def -out:..\bin-x86\JVM.DLL -platform:x86 -r:..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.JNI.dll -product:IKVM.NET -company:&quot;Jeroen Frijters&quot; -copyright:&quot;Copyright (C) 2002-2013 Jeroen Frijters&quot; -description:&quot;IKVM.NET JVM for .NET&quot; -version:$(AssemblyVersion)" />
-    <Exec Command="..\tools\bin\$(Configuration)\$(TargetFramework)\implib.exe jvm.def -out:..\bin-x64\JVM.DLL -platform:x64 -r:..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.JNI.dll -product:IKVM.NET -company:&quot;Jeroen Frijters&quot; -copyright:&quot;Copyright (C) 2002-2013 Jeroen Frijters&quot; -description:&quot;IKVM.NET JVM for .NET&quot; -version:$(AssemblyVersion)" />
+    <Exec Command="..\tools\bin\$(Configuration)\netcoreapp3.1\implib.exe jvm.def -out:..\bin-x86\JVM.DLL -platform:x86 -r:..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.JNI.dll -product:IKVM.NET -company:&quot;Jeroen Frijters&quot; -copyright:&quot;Copyright (C) 2002-2013 Jeroen Frijters&quot; -description:&quot;IKVM.NET JVM for .NET&quot; -version:$(AssemblyVersion)" />
+    <Exec Command="..\tools\bin\$(Configuration)\netcoreapp3.1\implib.exe jvm.def -out:..\bin-x64\JVM.DLL -platform:x64 -r:..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.JNI.dll -product:IKVM.NET -company:&quot;Jeroen Frijters&quot; -copyright:&quot;Copyright (C) 2002-2013 Jeroen Frijters&quot; -description:&quot;IKVM.NET JVM for .NET&quot; -version:$(AssemblyVersion)" />
   </Target>
 
   <Target Name="Clean">

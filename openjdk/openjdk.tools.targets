@@ -1,8 +1,8 @@
 <Project>
 
   <PropertyGroup>
-    <OpenJdkDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\..\openjdk-8u45-b14'))</OpenJdkDir>
-    <IkvmcExe>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\$(Configuration)\$(TargetFramework)\ikvmc.exe'))</IkvmcExe>
+    <OpenJdkDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)openjdk-8u45-b14'))</OpenJdkDir>
+    <IkvmcExe>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\Debug\netcoreapp3.1)\ikvmc.exe'))</IkvmcExe>
     <OpenJdkToolsGenRsp>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\tools.gen.rsp'))</OpenJdkToolsGenRsp>
   </PropertyGroup>
 
