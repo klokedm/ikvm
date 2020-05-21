@@ -176,7 +176,7 @@ namespace IKVM.Reflection
 			AssemblyRefTable assemblyRefs = module.AssemblyRef;
 			for (int i = 0; i < assemblyRefs.records.Length; i++)
 			{
-				if (module.GetString(assemblyRefs.records[i].Name) == "mscorlib")
+				if (module.GetString(assemblyRefs.records[i].Name).ToLower().EndsWith("corelib"))
 				{
 					Version ver = GetMscorlibVersion();
 					assemblyRefs.records[i].MajorVersion = (ushort)ver.Major;

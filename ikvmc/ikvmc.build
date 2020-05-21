@@ -78,10 +78,10 @@
             <references>
                 <include name="../bin/ICSharpCode.SharpZipLib.dll" asis="true" />
                 <include name="../bin/IKVM.Reflection.dll" asis="true" />
-                <include name="${ReferencePath}/mscorlib.dll" />
+                <!--<include name="${ReferencePath}/mscorlib.dll" />
                 <include name="${ReferencePath}/System.dll" />
                 <include name="${ReferencePath}/System.Configuration.dll" />
-                <include name="${ReferencePath}/System.Xml.dll" />
+                <include name="${ReferencePath}/System.Xml.dll" />-->
             </references>
         </csc>
     </target>

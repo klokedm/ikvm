@@ -94,7 +94,7 @@ sealed class FatalCompilerErrorException : Exception
 			case IKVM.Internal.Message.SharedClassLoaderCannotBeUsedOnModuleTarget:
 				return "Incompatible options: -target:module and -sharedclassloader cannot be combined";
 			case IKVM.Internal.Message.RuntimeNotFound:
-				return "Unable to load runtime assembly";
+				return "Unable to load runtime assembly: {0}";
 			case IKVM.Internal.Message.MainClassRequiresExe:
 				return "Main class cannot be specified for library or module";
 			case IKVM.Internal.Message.ExeRequiresMainClass:
@@ -255,7 +255,7 @@ sealed class IkvmcCompiler
 			Console.Error.WriteLine(x.Message);
 			return 1;
 		}
-		catch (Exception x)
+		/*catch (Exception x)
 		{
 			Console.Error.WriteLine();
 			Console.Error.WriteLine("*** INTERNAL COMPILER ERROR ***");
@@ -268,7 +268,7 @@ sealed class IkvmcCompiler
 			Console.Error.WriteLine();
 			Console.Error.WriteLine(x);
 			return 2;
-		}
+		}*/
 		finally
 		{
 			if (time)

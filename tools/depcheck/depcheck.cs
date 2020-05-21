@@ -29,62 +29,62 @@ using System.Reflection;
 
 class DependencyChecker
 {
-	static int Main(string[] args)
-	{
-		Dictionary<string, List<string>> deps = new Dictionary<string, List<string>>();
-		string dep = null;
-		foreach (string line in File.ReadAllLines(args[1]))
-		{
-			if (line.Trim().Length == 0 || line.StartsWith("#"))
-			{
-				// comment
-			}
-			else if (line.StartsWith("->"))
-			{
-				deps[dep].Add(line.Substring(2));
-			}
-			else
-			{
-				dep = line;
-				deps.Add(dep, new List<string>());
-			}
-		}
-		List<string> whitelist = new List<string>(new string[] { "mscorlib", "System", "IKVM.Runtime", "IKVM.OpenJDK.Core" });
-		bool fail = false;
-		foreach (string line in File.ReadAllLines(args[0]))
-		{
-			if (line.Contains("-out:"))
-			{
-				string file = line.Trim().Substring(5);
-				Assembly asm = Assembly.ReflectionOnlyLoadFrom(Path.Combine(Path.GetDirectoryName(args[0]), file));
-				if (!deps.ContainsKey(asm.GetName().Name))
-				{
-					fail = true;
-					Console.WriteLine(asm.GetName().Name);
-					foreach (AssemblyName asmdep in asm.GetReferencedAssemblies())
-					{
-						if (!whitelist.Contains(asmdep.Name))
-						{
-							Console.WriteLine("->{0}", asmdep.Name);
-						}
-					}
-				}
-				else
-				{
-					foreach (AssemblyName asmdep in asm.GetReferencedAssemblies())
-					{
-						if (!whitelist.Contains(asmdep.Name))
-						{
-							if (!deps[asm.GetName().Name].Contains(asmdep.Name))
-							{
-								fail = true;
-								Console.WriteLine("Error: Assembly {0} has an undeclared dependency on {1}", asm.GetName().Name, asmdep.Name);
-							}
-						}
-					}
-				}
-			}
-		}
-		return fail ? 1 : 0;
-	}
+    static int Main(string[] args)
+    {
+        Dictionary<string, List<string>> deps = new Dictionary<string, List<string>>();
+        string dep = null;
+        foreach (string line in File.ReadAllLines(args[1]))
+        {
+            if (line.Trim().Length == 0 || line.StartsWith("#"))
+            {
+                // comment
+            }
+            else if (line.StartsWith("->"))
+            {
+                deps[dep].Add(line.Substring(2));
+            }
+            else
+            {
+                dep = line;
+                deps.Add(dep, new List<string>());
+            }
+        }
+        List<string> whitelist = new List<string>(new string[] { "System.Private.CoreLib", "System", "System.Runtime", "IKVM.Runtime", "IKVM.OpenJDK.Core" });
+        bool fail = false;
+        foreach (string line in File.ReadAllLines(args[0]))
+        {
+            if (line.Contains("-out:"))
+            {
+                string file = line.Trim().Substring(5);
+                Assembly asm = Assembly.ReflectionOnlyLoadFrom(Path.Combine(Path.GetDirectoryName(args[0]), file));
+                if (!deps.ContainsKey(asm.GetName().Name))
+                {
+                    fail = true;
+                    Console.WriteLine(asm.GetName().Name);
+                    foreach (AssemblyName asmdep in asm.GetReferencedAssemblies())
+                    {
+                        if (!whitelist.Contains(asmdep.Name))
+                        {
+                            Console.WriteLine("->{0}", asmdep.Name);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (AssemblyName asmdep in asm.GetReferencedAssemblies())
+                    {
+                        if (!whitelist.Contains(asmdep.Name))
+                        {
+                            if (!deps[asm.GetName().Name].Contains(asmdep.Name))
+                            {
+                                fail = true;
+                                Console.WriteLine("Error: Assembly {0} has an undeclared dependency on {1}", asm.GetName().Name, asmdep.Name);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return fail ? 1 : 0;
+    }
 }

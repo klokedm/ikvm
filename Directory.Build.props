@@ -24,7 +24,7 @@
   </PropertyGroup>
   
   <PropertyGroup Label="Copyright Info">
-    <Company>Windward Studios (based on work by Jeroen Frijters)</Company>
+    <Company>Windward Studios, Semantika d.o.o. (based on work by Jeroen Frijters)</Company>
     <CurrentYear Condition=" '$(CurrentYear)' == '' ">$([System.DateTime]::UtcNow.Year.ToString())</CurrentYear>
     <BeginCopyrightYear>2002-2015, 2018</BeginCopyrightYear>
     <CopyrightYearRange>$(BeginCopyrightYear)-$(CurrentYear)</CopyrightYearRange>

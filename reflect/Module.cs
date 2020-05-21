@@ -334,15 +334,6 @@ namespace IKVM.Reflection
 		internal abstract Type FindType(TypeName name);
 		internal abstract Type FindTypeIgnoreCase(TypeName lowerCaseName);
 
-#if !NETSTANDARD
-		[Obsolete("Please use __ResolveOptionalParameterTypes(int, Type[], Type[], out CustomModifiers[]) instead.")]
-		public Type[] __ResolveOptionalParameterTypes(int metadataToken)
-		{
-			CustomModifiers[] dummy;
-			return __ResolveOptionalParameterTypes(metadataToken, null, null, out dummy);
-		}
-#endif
-
 		public Type GetType(string className)
 		{
 			return GetType(className, false, false);

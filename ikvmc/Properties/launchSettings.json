@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ikvmc": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\marko\\source\\repos\\ikvm\\bin\\Debug\\netcoreapp3.1\\ikvmc.exe",
+      "commandLineArgs": "-version:8.5.0.3 -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:System.Private.CoreLib.dll -r:System.Private.Uri.dll -r:System.Private.Xml.dll -r:System.Runtime.dll -r:System.Net.Sockets.dll -r:System.IO.FileSystem.dll -r:System.Drawing.Primitives.dll -r:Microsoft.Win32.Primitives.dll -r:System.Runtime.Extensions.dll -r:..\\bin\\Debug\\netcoreapp3.1\\runtimes\\win\\lib\\netcoreapp3.0\\System.Drawing.Common.dll -r:System.Net.Primitives.dll -r:System.Diagnostics.Process.dll -r:..\\bin\\Debug\\netcoreapp3.1\\System.Security.Permissions.dll -r:..\\bin\\Debug\\netcoreapp3.1\\System.Configuration.ConfigurationManager.dll -r:System.Net.NetworkInformation.dll -r:System.IO.FileSystem.Watcher.dll -r:System.IO.FileSystem.DriveInfo.dll -r:System.IO.FileSystem.AccessControl.dll -r:System.Console.dll -r:System.ComponentModel.Primitives.dll -r:System.Collections.Specialized.dll -r:System.ComponentModel.TypeConverter.dll -r:System.Xml.Serialization.dll -r:System.Security.Cryptography.Csp.dll -r:System.Security.Cryptography.Algorithms.dll -r:System.Data.dll -r:System.Data.Common.dll -r:System.Net.Mail.dll -r:System.Diagnostics.FileVersionInfo.dll -r:System.ComponentModel.dll -r:System.Configuration.dll -r:System.IO.FileSystem.AccessControl.dll -r:..\\bin\\Debug\\netcoreapp3.1\\System.Data.Odbc.dll -r:System.dll -r:System.Core.dll -r:System.Data.dll -r:System.Drawing.dll -r:System.Xml.dll  -nowarn:110 -w4 -noparameterreflection @response.gen.txt",
+      "workingDirectory": "C:\\Users\\marko\\source\\repos\\ikvm\\openjdk"
+    }
+  }
+}

@@ -1999,7 +1999,8 @@ class Thread implements Runnable {
                     }
                     cli.System.Diagnostics.StackTrace stack;
                     try {
-                        stack = new cli.System.Diagnostics.StackTrace(nativeThread, true);
+						//TODO: This has been changed; verify if this is the intent here
+                        stack = new cli.System.Diagnostics.StackTrace(true);
                     }
                     finally {
                         if (suspended) {

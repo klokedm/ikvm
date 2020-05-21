@@ -36,8 +36,8 @@
                 <include name="../bin/IKVM.OpenJDK.Core.dll" asis="true" />
                 <include name="../bin/IKVM.OpenJDK.Util.dll" asis="true" />
                 <include name="../bin/IKVM.Runtime.dll" asis="true" />
-                <include name="${ReferencePath}/mscorlib.dll" />
-                <include name="${ReferencePath}/System.dll" />
+                <!--<include name="${ReferencePath}/mscorlib.dll" />
+                <include name="${ReferencePath}/System.dll" />-->
             </references>
         </csc>
     </target>

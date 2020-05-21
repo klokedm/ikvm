@@ -144,7 +144,7 @@ static class NetExp
 		}
 		if(File.Exists(assemblyNameOrPath) && nostdlib)
 		{
-			// Add the target assembly to the references list, to allow it to be considered as "mscorlib".
+			// Add the target assembly to the references list, to allow it to be considered as "System.Private.CoreLib".
 			// This allows "ikvmstub -nostdlib \...\mscorlib.dll" to work.
 			references.Add(assemblyNameOrPath);
 		}
