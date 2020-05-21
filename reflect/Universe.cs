@@ -223,9 +223,9 @@ namespace IKVM.Reflection
             resolveMissingMembers = (options & UniverseOptions.ResolveMissingMembers) != 0;
         }
 
-        internal Assembly Mscorlib
+        public Assembly Mscorlib
         {
-            get { return LoadFile(typeof(object).Assembly.Location); }
+            get { return Load("System.Runtime"); }
         }
 
         private Type ImportMscorlibType(string ns, string name)
@@ -507,7 +507,7 @@ namespace IKVM.Reflection
 
         internal bool HasMscorlib
         {
-            get { return GetLoadedAssembly("System.Private.CoreLib") != null; }
+            get { return GetLoadedAssembly("System.Runtime") != null; }
         }
 
         public event ResolveEventHandler AssemblyResolve

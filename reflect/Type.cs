@@ -2250,7 +2250,7 @@ namespace IKVM.Reflection
         private bool ResolvePotentialEnumOrValueType()
         {
             if (this.Assembly == this.Universe.Mscorlib
-                || this.Assembly.GetName().Name.ToLower().EndsWith("corelib")
+                || this.Assembly.GetName().Name.ToLower() == "system.runtime"
                 // check if mscorlib forwards the type (.NETCore profile reference mscorlib forwards System.Enum and System.ValueType to System.Runtime.dll)
                 || this.Universe.Mscorlib.FindType(TypeName) == this)
             {

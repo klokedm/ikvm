@@ -49,7 +49,7 @@ class DependencyChecker
                 deps.Add(dep, new List<string>());
             }
         }
-        List<string> whitelist = new List<string>(new string[] { "System.Private.CoreLib", "System", "System.Runtime", "IKVM.Runtime", "IKVM.OpenJDK.Core" });
+        List<string> whitelist = new List<string>(new string[] { "System.Runtime", "System", "System.Runtime", "IKVM.Runtime", "IKVM.OpenJDK.Core" });
         bool fail = false;
         foreach (string line in File.ReadAllLines(args[0]))
         {
