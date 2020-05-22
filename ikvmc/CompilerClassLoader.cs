@@ -2641,10 +2641,12 @@ namespace IKVM.Internal
 			Tracer.Info(Tracer.Compiler, "CompilerClassLoader.Save...");
 			foreach (CompilerClassLoader compiler in compilers)
 			{
+				Tracer.Info(Tracer.Compiler, "Preparing save");
 				compiler.PrepareSave();
 			}
 			if (StaticCompiler.errorCount > 0)
 			{
+				Tracer.Info(Tracer.Compiler, $"There were errors! Count: {StaticCompiler.errorCount}");
 				return 1;
 			}
 			foreach (CompilerClassLoader compiler in compilers)

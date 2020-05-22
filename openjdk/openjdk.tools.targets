@@ -16,8 +16,9 @@
       </TransformOpenJdkDir>
     </ItemGroup>
     <RegexTransform Items="@(TransformOpenJdkDir)" />
-    <Exec Command="$(IkvmcExe)  -target:library -sharedclassloader -r:mscorlib.dll -version:$(AssemblyVersion) -warnaserror -w4 -noparameterreflection @tools.gen.rsp" />
-    <Copy SourceFiles="\..\bin\IKVM.OpenJDK.Tools.dll'))" DestinationFolder="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\$(Configuration)\$(TargetFramework)'))" />
+    <Exec Command="$(IkvmcExe)  -target:library -sharedclassloader -r:mscorlib.dll -version:$(AssemblyVersion) -w4 -noparameterreflection @tools.gen.rsp" />
+    <Copy SourceFiles="..\bin\IKVM.OpenJDK.Tools.dll" DestinationFolder="..\bin\$(Configuration)\$(TargetFramework)" />
+    <Copy SourceFiles="..\bin\Debug\net461\IKVM.Runtime.JNI.dll" DestinationFolder="..\bin\$(Configuration)\$(TargetFramework)" />
   </Target>
 
   <Target Name="Clean">
