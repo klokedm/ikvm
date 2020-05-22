@@ -17,7 +17,7 @@
 
   <Target Name="BuildClasses" DependsOnTargets="StubJars;AllSourcesGenLst;AssemblyInfoJava;PropertyConstantsJava">
     <Message Text="BuildClasses target is running..." Importance="high" />
-    <Exec Command="javac -J-Xmx1536M -g -nowarn -implicit:none -parameters -cp dummy -bootclasspath mscorlib.jar;System.jar;System.Core.jar;System.Data.jar;System.Drawing.jar;System.Xml.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar @allsources.gen.lst" />
+    <Exec Command="javac -J-Xmx1536M -g -nowarn -implicit:none -parameters -cp dummy -bootclasspath mscorlib.jar;System.jar;System.Core.jar;System.Data.jar;System.Drawing.jar;System.Xml.jar;System.IO.FileSystem.AccessControl.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar @allsources.gen.lst" />
   </Target>
 
   <Target Name="StubJars" DependsOnTargets="SystemCore">
@@ -28,6 +28,7 @@
     <Exec Command="$(IkvmstubExe) -bootstrap System.Data" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.Drawing" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.Xml" />
+    <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem.AccessControl" />
   </Target>
 
   <Target Name="SystemCore" DependsOnTargets="" Condition=" !$(SkipSystemCoreDependency) ">
@@ -95,7 +96,7 @@
   </Target>
 
   <PropertyGroup>
-    <Classpath>mscorlib.jar;System.Xml.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
+    <Classpath>mscorlib.jar;System.Xml.jar;System.IO.FileSystem.AccessControl.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
   </PropertyGroup>
   <Target Name="Rmi">
     <PropertyGroup>
@@ -191,7 +192,7 @@
   <Target Name="Core" DependsOnTargets="ResponseGenTxt;ManifestMf;NashornVersion">
     <Copy SourceFiles="..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.dll" DestinationFolder="." />
     <Copy SourceFiles="..\bin\$(Configuration)\$(TargetFramework)\IKVM.AWT.WinForms.dll" DestinationFolder="." />
-    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:mscorlib.dll -r:System.dll -r:System.Core.dll -r:System.Xml.dll -r:IKVM.Runtime.dll -nowarn:110 -w4 -noparameterreflection -warnaserror @response.gen.txt" />
+    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:mscorlib.dll -r:System.dll -r:System.Core.dll -r:System.Xml.dll -r:System.IO.FileSystem.AccessControl.dll -r:IKVM.Runtime.dll -nowarn:110 -w4 -noparameterreflection -warnaserror @response.gen.txt" />
     <CallTarget Targets="Peverify" />
     <Exec Command="..\tools\bin\$(Configuration)\$(TargetFramework)\depcheck.exe response.txt dependencies.txt" />
     <ItemGroup>
