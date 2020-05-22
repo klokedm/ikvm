@@ -29,6 +29,7 @@ using System.Text;
 using System.Diagnostics;
 using IKVM.Reflection.Reader;
 using IKVM.Reflection.Emit;
+using IKVM.FrameworkUtil;
 
 namespace IKVM.Reflection
 {
@@ -225,7 +226,7 @@ namespace IKVM.Reflection
 
         public Assembly Mscorlib
         {
-            get { return Load("System.Runtime"); }
+            get { return Load(RuntimeInfo.ReferenceCoreLibName); }
         }
 
         private Type ImportMscorlibType(string ns, string name)
@@ -507,7 +508,7 @@ namespace IKVM.Reflection
 
         internal bool HasMscorlib
         {
-            get { return GetLoadedAssembly("System.Runtime") != null; }
+            get { return GetLoadedAssembly(RuntimeInfo.ReferenceCoreLibName) != null; }
         }
 
         public event ResolveEventHandler AssemblyResolve

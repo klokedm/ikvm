@@ -58,6 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IKVM.FrameworkUtil\IKVM.FrameworkUtil.csproj" />
     <ProjectReference Include="..\reflect\IKVM.Reflection.csproj" />
   </ItemGroup>
 

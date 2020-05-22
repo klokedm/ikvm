@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using IKVM.Reflection;
+using IKVM.FrameworkUtil;
 
 namespace IKVM.Internal
 {
@@ -102,7 +103,7 @@ namespace IKVM.Internal
 						// to avoid problems (i.e. weird exceptions), we don't allow assemblies to load that reference a newer version of mscorlib
 						foreach (AssemblyName asmref in module.GetReferencedAssemblies())
 						{
-							if (asmref.Name == "System.Runtime" && asmref.Version > mscorlibVersion)
+							if (asmref.Name.IsReferenceCoreLib() && asmref.Version > mscorlibVersion)
 							{
 								Console.Error.WriteLine(asmref.FullName + " > " + mscorlibVersion);
 								Console.Error.WriteLine("Error: unable to load assembly '{0}' as it depends on a higher version of mscorlib than the one currently loaded", path);
@@ -425,7 +426,7 @@ namespace IKVM.Internal
 				{
 					try
 					{
-						if (AssemblyName.GetAssemblyName(r).Name.ToLower()=="system.runtime")
+						if (AssemblyName.GetAssemblyName(r).Name.IsPartOfCore())
 						{
 							return LoadFile(r);
 						}
@@ -435,7 +436,7 @@ namespace IKVM.Internal
 					}
 				}
 			}
-			foreach (string mscorlib in FindAssemblyPath("System.Runtime.dll"))
+			foreach (string mscorlib in FindAssemblyPath(RuntimeInfo.ReferenceCoreLibName+".dll"))
 			{
 				return LoadFile(mscorlib);
 			}

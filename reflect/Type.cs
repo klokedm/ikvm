@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using IKVM.Reflection.Emit;
 using System.Linq;
 using System.Linq.Expressions;
+using IKVM.FrameworkUtil;
 
 namespace IKVM.Reflection
 {
@@ -2250,7 +2251,7 @@ namespace IKVM.Reflection
         private bool ResolvePotentialEnumOrValueType()
         {
             if (this.Assembly == this.Universe.Mscorlib
-                || this.Assembly.GetName().Name.ToLower() == "system.runtime"
+                || this.Assembly.GetName().Name.IsPartOfCore()
                 // check if mscorlib forwards the type (.NETCore profile reference mscorlib forwards System.Enum and System.ValueType to System.Runtime.dll)
                 || this.Universe.Mscorlib.FindType(TypeName) == this)
             {

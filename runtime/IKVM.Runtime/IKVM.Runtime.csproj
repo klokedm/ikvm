@@ -60,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\IKVM.FrameworkUtil\IKVM.FrameworkUtil.csproj" />
     <ProjectReference Include="..\IKVM.Runtime.JNI\IKVM.Runtime.JNI.csproj" />
   </ItemGroup>
 

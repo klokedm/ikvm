@@ -23,6 +23,7 @@
   
 */
 
+using IKVM.FrameworkUtil;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -89,7 +90,7 @@ namespace IKVM.Reflection
                 throw new ArgumentException();
             }
 
-            if (name2.Name != null && name2.Name.ToLower() == "system.runtime")
+            if (name2.Name != null && name2.Name.IsPartOfCore())
             {
                 if (name1.Name != null && name1.Name.Equals(name2.Name, StringComparison.OrdinalIgnoreCase))
                 {

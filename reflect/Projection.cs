@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using IKVM.FrameworkUtil;
 using IKVM.Reflection.Metadata;
 using IKVM.Reflection.Reader;
 
@@ -176,7 +177,7 @@ namespace IKVM.Reflection
 			AssemblyRefTable assemblyRefs = module.AssemblyRef;
 			for (int i = 0; i < assemblyRefs.records.Length; i++)
 			{
-				if (module.GetString(assemblyRefs.records[i].Name) == "system.runtime")
+				if (module.GetString(assemblyRefs.records[i].Name).IsPartOfCore())
 				{
 					Version ver = GetMscorlibVersion();
 					assemblyRefs.records[i].MajorVersion = (ushort)ver.Major;
@@ -189,7 +190,7 @@ namespace IKVM.Reflection
 
 			int publicKeyTokenMicrosoft = AddBlob(ref blobHeap, new byte[] { 0xB0, 0x3F, 0x5F, 0x7F, 0x11, 0xD5, 0x0A, 0x3A });
 			int publicKeyTokenEcma = AddBlob(ref blobHeap, new byte[] { 0xB7, 0x7A, 0x5C, 0x56, 0x19, 0x34, 0xE0, 0x89 });
-			assemblyRefTokens[(int)ProjectionAssembly.System_Runtime] = AddAssemblyReference("System.Runtime", publicKeyTokenMicrosoft);
+			assemblyRefTokens[(int)ProjectionAssembly.System_Runtime] = AddAssemblyReference(RuntimeInfo.ReferenceCoreLibName, publicKeyTokenMicrosoft);
 			assemblyRefTokens[(int)ProjectionAssembly.System_Runtime_InteropServices_WindowsRuntime] = AddAssemblyReference("System.Runtime.InteropServices.WindowsRuntime", publicKeyTokenMicrosoft);
 			assemblyRefTokens[(int)ProjectionAssembly.System_ObjectModel] = AddAssemblyReference("System.ObjectModel", publicKeyTokenMicrosoft);
 			assemblyRefTokens[(int)ProjectionAssembly.System_Runtime_WindowsRuntime] = AddAssemblyReference("System.Runtime.WindowsRuntime", publicKeyTokenEcma);
@@ -589,14 +590,14 @@ namespace IKVM.Reflection
 		{
 			return ((ns == "System.Collections.Generic" && name == "KeyValuePair`2")
 					|| (ns == "System" && name == "Nullable`1"))
-				&& module.Assembly.GetName().Name == "System.Runtime";
+				&& module.Assembly.GetName().Name.IsPartOfCore();
 		}
 
 		internal static bool IsProjectedReferenceType(string ns, string name, Module module)
 		{
 			return ((ns == "System" && name == "Exception")
 					|| (ns == "System" && name == "Type"))
-				&& module.Assembly.GetName().Name == "System.Runtime";
+				&& module.Assembly.GetName().Name.IsPartOfCore();
 		}
 	}
 }
