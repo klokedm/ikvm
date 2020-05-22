@@ -2,15 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <version>@VERSION@</version>
-    <authors>Jeroen Frijters</authors>
+    <authors>Marko Kokol, Semantika d.o.o. (based on work by Jeroen Frijters and Windward)</authors>
     <owners />
-    <licenseUrl>https://github.com/ikvm-revived/ikvm/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/ikvm-revived/ikvm</projectUrl>
-    <id>IKVM.REVIVED</id>
-    <title>IKVM.NET.REVIVED-FORK</title>
+    <licenseUrl>https://github.com/klokedm/ikvm/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/klokedm/ikvm</projectUrl>
+    <id>SEM.IKVM.REVIVED</id>
+    <title>SEM.IKVM.NET.REVIVED-FORK</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>This project is an implementation of Java for Mono and the Microsoft .NET Framework.</description>
-    <tags>IKVM.NET.REVIVED-FORK, Java, .NET</tags>
-    <releaseNotes>The release notes can be found here: https://github.com/ikvm-revived/ikvm/releases/tag/@VERSION@</releaseNotes>
+    <description>This project is an implementation of Java for Mono and the Microsoft .NET Framework made compatible with .NET Standard 2.0 with Platform Extensions.</description>
+    <tags> Java, .NET</tags>
+    <releaseNotes>The release notes can be found here: https://github.com/klokedm/ikvm/releases/tag/@VERSION@</releaseNotes>
   </metadata>
 </package>

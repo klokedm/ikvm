@@ -21,6 +21,9 @@
   Jeroen Frijters
   jeroen@frijters.net
   
+  =====
+  Modified by Marko Kokol, Semantika d.o.o.
+  
 -->
 <project name="nupkg" default="nupkg">
     <include buildfile="../ikvm.include" />

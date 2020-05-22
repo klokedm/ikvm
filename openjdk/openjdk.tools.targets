@@ -1,13 +1,13 @@
 <Project>
 
   <PropertyGroup>
-    <OpenJdkDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\..\openjdk-8u45-b14'))</OpenJdkDir>
-    <IkvmcExe>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\$(Configuration)\$(TargetFramework)\ikvmc.exe'))</IkvmcExe>
-    <OpenJdkToolsGenRsp>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\tools.gen.rsp'))</OpenJdkToolsGenRsp>
+    <OpenJdkDir>openjdk-8u45-b14</OpenJdkDir>
+    <IkvmcExe>..\bin\debug\$(TargetFramework)\ikvmc.exe</IkvmcExe>
+    <OpenJdkToolsGenRsp>tools.gen.rsp</OpenJdkToolsGenRsp>
   </PropertyGroup>
 
   <Target Name="RunBuild" BeforeTargets="CoreCompile">
-    <Copy SourceFiles="$(MSBuildThisFileDirectory)\tools.rsp" DestinationFiles="$(OpenJdkToolsGenRsp)" />
+    <Copy SourceFiles="tools.rsp" DestinationFiles="$(OpenJdkToolsGenRsp)" />
     <ItemGroup>
       <TransformOpenJdkDir Include="$(OpenJdkToolsGenRsp)">
         <Find>@OPENJDK@</Find>
@@ -16,8 +16,8 @@
       </TransformOpenJdkDir>
     </ItemGroup>
     <RegexTransform Items="@(TransformOpenJdkDir)" />
-    <Exec Command="$(IkvmcExe) -r:mscorlib.dll -version:$(AssemblyVersion) -warnaserror -w4 -noparameterreflection @tools.gen.rsp" />
-    <Copy SourceFiles="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\IKVM.OpenJDK.Tools.dll'))" DestinationFolder="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\$(Configuration)\$(TargetFramework)'))" />
+    <Exec Command="$(IkvmcExe)  -target:library -sharedclassloader -r:mscorlib.dll -version:$(AssemblyVersion) -warnaserror -w4 -noparameterreflection @tools.gen.rsp" />
+    <Copy SourceFiles="\..\bin\IKVM.OpenJDK.Tools.dll'))" DestinationFolder="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\bin\$(Configuration)\$(TargetFramework)'))" />
   </Target>
 
   <Target Name="Clean">

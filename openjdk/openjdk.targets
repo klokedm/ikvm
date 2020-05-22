@@ -191,8 +191,9 @@
 
   <Target Name="Core" DependsOnTargets="ResponseGenTxt;ManifestMf;NashornVersion">
     <Copy SourceFiles="..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.dll" DestinationFolder="." />
-    <Copy SourceFiles="..\bin\$(Configuration)\$(TargetFramework)\IKVM.AWT.WinForms.dll" DestinationFolder="." />
-    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:mscorlib.dll -r:System.dll -r:System.Core.dll -r:System.Xml.dll -r:System.IO.FileSystem.AccessControl.dll -r:IKVM.Runtime.dll -nowarn:110 -w4 -noparameterreflection -warnaserror @response.gen.txt" />
+    <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\IKVM.AWT.WinForms.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\bin\Release\$(TargetFramework)\IKVM.Runtime.dll" DestinationFolder="..\bin\Debug\$(TargetFramework)\" />
+    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:mscorlib.dll -r:System.dll -r:System.Core.dll -r:System.Xml.dll -r:..\bin\debug\$(TargetFramework)\System.IO.FileSystem.AccessControl.dll -r:IKVM.Runtime.dll -nowarn:110 -w4 -noparameterreflection -warnaserror @response.gen.txt" />
     <CallTarget Targets="Peverify" />
     <Exec Command="..\tools\bin\$(Configuration)\$(TargetFramework)\depcheck.exe response.txt dependencies.txt" />
     <ItemGroup>
@@ -201,7 +202,11 @@
     <Copy SourceFiles="@(IkvmDllFiles)" DestinationFolder="..\bin\$(Configuration)\$(TargetFramework)" />
     <Exec Command="..\tools\bin\$(Configuration)\$(TargetFramework)\updbaseaddresses.exe response.txt" />
     <MakeDir Directories="..\lib" />
-    <Exec Command="$(IkvmstubExe) -out:..\lib\ikvm-api.jar ..\bin\$(Configuration)\$(TargetFramework)\IKVM.OpenJDK.Core.dll -namespace:ikvm.io -namespace:ikvm.lang-namespace:ikvm.runtime" />
+    <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\ikvmstub.exe" DestinationFolder="..\bin\Release\$(TargetFramework)\" />
+    <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\ikvmc.exe" DestinationFolder="..\bin\Release\$(TargetFramework)\" />
+    <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\ICSharpCode.SharpZipLib.dll" DestinationFolder="..\bin\Release\$(TargetFramework)\" />
+    <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\System.IO.FileSystem.AccessControl.dll" DestinationFolder="..\bin\Release\$(TargetFramework)\" />
+    <Exec Command="..\bin\Release\$(TargetFramework)\ikvmstub.exe -out:..\lib\ikvm-api.jar ..\bin\Release\net461\IKVM.OpenJDK.Core.dll -namespace:ikvm.io -namespace:ikvm.lang-namespace:ikvm.runtime" />
   </Target>
 
   <Target Name="Peverify" Condition="$(PEVERIFY) != ''">

@@ -14,13 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\$(TargetFramework)\IKVM.OpenJDK.Core.dll</HintPath>
+      <HintPath>..\..\bin\Release\net461\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+     <Reference Include="IKVM.Runtime">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.dll</HintPath>
+      <HintPath>..\..\bin\Release\net461\IKVM.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 

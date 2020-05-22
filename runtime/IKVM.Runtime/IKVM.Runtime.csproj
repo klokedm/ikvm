@@ -26,21 +26,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\$(TargetFramework)\IKVM.OpenJDK.Core.dll</HintPath>
+      <HintPath>..\..\bin\Release\net461\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Management, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Management">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\$(TargetFramework)\IKVM.OpenJDK.Management.dll</HintPath>
+      <HintPath>..\..\bin\Release\net461\IKVM.OpenJDK.Management.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Misc, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Misc">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\$(TargetFramework)\IKVM.OpenJDK.Misc.dll</HintPath>
+      <HintPath>..\..\bin\Release\net461\IKVM.OpenJDK.Misc.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Util, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Util">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\$(TargetFramework)\IKVM.OpenJDK.Util.dll</HintPath>
+      <HintPath>..\..\bin\Release\net461\IKVM.OpenJDK.Util.dll</HintPath>
     </Reference>
   </ItemGroup>
 
