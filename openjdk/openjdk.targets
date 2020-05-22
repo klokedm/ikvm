@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <OpenJdkDir>..\..\openjdk-8u45-b14</OpenJdkDir>
+    <OpenJdkDir>openjdk-8u45-b14</OpenJdkDir>
     <!-- Weird, just wanted to get it quickly -->
     <OpenJdkDirSlash>openjdk-8u45-b14</OpenJdkDirSlash>
     <SkipSystemCoreDependency>false</SkipSystemCoreDependency>
@@ -28,7 +28,7 @@
     <Exec Command="$(IkvmstubExe) -bootstrap System.Data" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.Drawing" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.Xml" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem.AccessControl" />
+    <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\debug\$(TargetFramework)\System.IO.FileSystem.AccessControl.dll" />
   </Target>
 
   <Target Name="SystemCore" DependsOnTargets="" Condition=" !$(SkipSystemCoreDependency) ">
