@@ -1,4 +1,4 @@
-# Semantika port .NET Core of Windward IKVM
+# Semantika port of Windward IKVM to .NET Core
 
 ## Build
 
