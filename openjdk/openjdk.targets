@@ -3,10 +3,10 @@
   <PropertyGroup>
     <OpenJdkDir>..\..\openjdk-8u45-b14</OpenJdkDir>
     <!-- Weird, just wanted to get it quickly -->
-    <OpenJdkDirSlash>../../openjdk-8u45-b14</OpenJdkDirSlash>
+    <OpenJdkDirSlash>openjdk-8u45-b14</OpenJdkDirSlash>
     <SkipSystemCoreDependency>false</SkipSystemCoreDependency>
-    <IkvmstubExe>..\bin\$(Configuration)\$(TargetFramework)\ikvmstub.exe</IkvmstubExe>
-    <IkvmcExe>..\bin\$(Configuration)\$(TargetFramework)\ikvmc.exe</IkvmcExe>
+    <IkvmstubExe>..\bin\debug\$(TargetFramework)\ikvmstub.exe</IkvmstubExe>
+    <IkvmcExe>..\bin\debug\$(TargetFramework)\ikvmc.exe</IkvmcExe>
     <OpenJdkImplementationVersion>1.8.0</OpenJdkImplementationVersion>
     <OpenJdkSpecificationVersion>1.8</OpenJdkSpecificationVersion>
     <OpenJdkFullVersion>1.8.0_45-b14</OpenJdkFullVersion>
