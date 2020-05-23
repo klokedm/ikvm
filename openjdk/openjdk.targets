@@ -17,43 +17,17 @@
 
   <Target Name="BuildClasses" DependsOnTargets="StubJars;AllSourcesGenLst;AssemblyInfoJava;PropertyConstantsJava">
     <Message Text="BuildClasses target is running..." Importance="high" />
-    <Exec Command="javac -target 8 -J-Xmx1536M -g -nowarn -implicit:none -parameters -cp dummy -bootclasspath System.Threading.Thread.jar;System.Threading.ThreadPool.jar;System.Diagnostics.StackTrace.jar;System.Threading.jar;System.Runtime.InteropServices.jar;System.Runtime.jar;System.Security.Cryptography.Algorithms.jar;System.IO.FileSystem.AccessControl.jar;System.ComponentModel.Primitives.jar;System.Collections.Specialized.jar;System.ComponentModel.TypeConverter.jar;System.Xml.Serialization.jar;System.Security.Cryptography.Csp.jar;System.Net.Mail.jar;System.Configuration.ConfigurationManager.jar;System.Diagnostics.FileVersionInfo.jar;System.ComponentModel.jar;System.Configuration.jar;System.Net.Sockets.jar;System.Runtime.Extensions.jar;Microsoft.Win32.Primitives.jar;System.Net.NetworkInformation.jar;System.Data.jar;System.Data.Common.jar;System.Data.Odbc.jar;System.IO.FileSystem.Watcher.jar;System.IO.FileSystem.DriveInfo.jar;System.IO.FileSystem.AccessControl.jar;System.Console.jar;System.Drawing.Common.jar;System.Net.Primitives.jar;System.Diagnostics.Process.jar;System.IO.FileSystem.jar;System.Drawing.Primitives.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar @allsources.gen.lst" />
+    <Exec Command="javac -target 8 -J-Xmx1536M -g -nowarn -implicit:none -parameters -cp dummy -bootclasspath netstandard.jar;System.IO.FileSystem.AccessControl.jar;System.Runtime.InteropServices.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar @allsources.gen.lst" />
   </Target>
 
   <Target Name="StubJars" DependsOnTargets="SystemCore">
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Runtime -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Net.Sockets -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem.Watcher -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem.DriveInfo -forwarders" />
+    <Exec Command="$(IkvmstubExe) -bootstrap netstandard -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem.AccessControl -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Threading -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Threading.Thread -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Threading.ThreadPool -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Runtime.InteropServices -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Runtime.Extensions -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.Drawing.Primitives -forwarders" />
 	<Exec Command="$(IkvmstubExe) -bootstrap Microsoft.Win32.Primitives -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Net.Primitives -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Diagnostics.Process -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Diagnostics.StackTrace -forwarders" />
-	<!--<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll -forwarders" />-->
 	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Net.NetworkInformation -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Console -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.ComponentModel.Primitives -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Collections.Specialized -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.ComponentModel.TypeConverter -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Xml.Serialization -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap System.Security.Cryptography.Csp -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Security.Cryptography.Algorithms -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Data" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Data.Common -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Net.Mail" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.Diagnostics.FileVersionInfo -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap System.ComponentModel -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll" />
+	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll -forwarders" />
   </Target>
 
   <Target Name="SystemCore" DependsOnTargets="" Condition=" !$(SkipSystemCoreDependency) ">
@@ -121,7 +95,7 @@
   </Target>
 
   <PropertyGroup>
-    <Classpath>System.Threading.jar;System.Threading.Thread.jar;System.Threading.ThreadPool.jar;System.Runtime.InteropServices.jar;System.Runtime.jar;System.Security.Cryptography.Algorithms.jar;System.IO.FileSystem.AccessControl.jar;System.ComponentModel.Primitives.jar;System.Collections.Specialized.jar;System.ComponentModel.TypeConverter.jar;System.Xml.Serialization.jar;System.Security.Cryptography.Csp.jar;System.Net.Mail.jar;System.Configuration.ConfigurationManager.jar;System.Diagnostics.FileVersionInfo.jar;System.ComponentModel.jar;System.Configuration.jar;System.Net.Sockets.jar;System.Runtime.Extensions.jar;Microsoft.Win32.Primitives.jar;System.Net.NetworkInformation.jar;System.Data.jar;System.Data.Common.jar;System.Data.Odbc.jar;System.IO.FileSystem.Watcher.jar;System.IO.FileSystem.DriveInfo.jar;System.IO.FileSystem.AccessControl.jar;System.Console.jar;System.Drawing.Common.jar;System.Net.Primitives.jar;System.Diagnostics.Process.jar;System.IO.FileSystem.jar;System.Drawing.Primitives.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
+    <Classpath>netstandard.jar;System.IO.FileSystem.AccessControl.jar;System.Runtime.InteropServices.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
   </PropertyGroup>
   <Target Name="Rmi">
     <PropertyGroup>
@@ -218,8 +192,7 @@
     <Copy SourceFiles="..\bin\$(Configuration)\netstandard2.1\IKVM.Runtime.dll" DestinationFolder="." />
     <Copy SourceFiles="..\bin\$(Configuration)\netstandard2.1\IKVM.Runtime.dll" DestinationFolder="..\bin\Debug\netcoreapp3.1\" />
     <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\IKVM.AWT.WinForms.dll" DestinationFolder="." />
-    <!--<Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:System.Runtime -r:System -r:System.Core -r:System.Xml -r:IKVM.Runtime.dll -nowarn:110 -w4 -noparameterreflection -warnaserror @response.gen.txt" />-->
-    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:System.Threading.Thread.dll -r:System.Threading.ThreadPool.dll -r:System.Diagnostics.StackTrace.dll -r:System.Threading.dll -r:System.Runtime.InteropServices.dll -r:System.Runtime.dll -r:System.Security.Cryptography.Algorithms.dll -r:System.IO.FileSystem.AccessControl.dll -r:System.ComponentModel.Primitives.dll -r:System.Collections.Specialized.dll -r:System.ComponentModel.TypeConverter.dll -r:System.Xml.Serialization.dll -r:System.Security.Cryptography.Csp.dll -r:System.Net.Mail.dll -r:..\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -r:System.Diagnostics.FileVersionInfo.dll -r:System.ComponentModel.dll -r:System.Configuration.dll -r:System.Net.Sockets.dll -r:System.Runtime.Extensions.dll -r:Microsoft.Win32.Primitives.dll -r:System.Net.NetworkInformation.dll -r:System.Data.dll -r:System.Data.Common.dll -r:..\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll -r:System.IO.FileSystem.Watcher.dll -r:System.IO.FileSystem.DriveInfo.dll -r:System.IO.FileSystem.AccessControl.dll -r:System.Console.dll -r:..\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll -r:System.Net.Primitives.dll -r:System.Diagnostics.Process.dll -r:System.IO.FileSystem.dll -r:System.Drawing.Primitives.dll  -nowarn:110 -w4 -noparameterreflection @response.gen.txt" />
+    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:netstandard.dll -r:System.IO.FileSystem.AccessControl.dll -r:..\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll -r:System.Drawing.Primitives.dll -r:Microsoft.Win32.Primitives.dll -r:..\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -r:..\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll -r:System.Runtime.Extensions.dll -nowarn:110 -w4 -noparameterreflection @response.gen.txt" />
     <CallTarget Targets="Peverify" />
     <Exec Command="..\tools\bin\$(Configuration)\netcoreapp3.1\depcheck.exe response.txt dependencies.txt" />
     <ItemGroup>

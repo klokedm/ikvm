@@ -22,6 +22,8 @@
   
 */
 
+using System.Reflection;
+
 namespace IKVM.FrameworkUtil
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,20 +38,25 @@ namespace IKVM.FrameworkUtil
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class RuntimeInfo
     {
-#if NETSTANDARD
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   The reference core library full name. </summary>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static readonly string ReferenceCoreLibFullName = "netstandard, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = cc7b13ffcd2ddd51";
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   The reference core library assembly. </summary>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static readonly Assembly ReferenceCoreLibAssembly = Assembly.Load(ReferenceCoreLibFullName);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Name of the reference core library. </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static readonly string ReferenceCoreLibName = "System.Runtime";
-#else
+        public static readonly string ReferenceCoreLibName = ReferenceCoreLibAssembly.GetName().Name;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Name of the reference core library. </summary>
+        /// <summary>   Location of the reference core library. </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static const string ReferenceCoreLibName = "mscorlib";
-#endif
+        public static readonly string ReferenceCoreLibLocation = ReferenceCoreLibAssembly.Location;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Name of the private core library. </summary>
@@ -87,7 +94,8 @@ namespace IKVM.FrameworkUtil
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsReferenceCoreLib(this string libraryName)
         {
-            return libraryName != null && libraryName.ToLower() == ReferenceCoreLibName.ToLower();
+            //TODO: Should we change this for other OS types?
+            return libraryName != null && (libraryName.ToLower() == ReferenceCoreLibName.ToLower() || libraryName.ToLower() == ReferenceCoreLibName.ToLower() + ".dll");
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +113,7 @@ namespace IKVM.FrameworkUtil
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsPrivateCoreLib(this string libraryName)
         {
-            return libraryName != null && libraryName.ToLower() == PrivateCoreLibName.ToLower();
+            return libraryName != null && (libraryName.ToLower() == PrivateCoreLibName.ToLower() || libraryName.ToLower() == PrivateCoreLibName.ToLower() + ".dll");
         }
     }
 }

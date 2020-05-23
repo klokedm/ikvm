@@ -171,11 +171,14 @@ static class NetExp
 			return 1;
 		}
 		if(file != null && file.Exists)
+
 		{
+			Console.Error.WriteLine($"Located file and loading assembly at {assemblyNameOrPath}");
 			assembly = StaticCompiler.LoadFile(assemblyNameOrPath);
 		}
 		else
 		{
+			Console.Error.WriteLine($"Trying to locate and load {assemblyNameOrPath}");
 			assembly = StaticCompiler.Resolver.LoadWithPartialName(assemblyNameOrPath);
 		}
 		int rc = 0;
