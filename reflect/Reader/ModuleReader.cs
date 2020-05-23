@@ -20,6 +20,31 @@
   Jeroen Frijters
   jeroen@frijters.net
   
+  =====
+
+  .NET Core Modifications by Marko Kokol, Semantika, d.o.o.
+
+  Copyright (C) 2020 Jeroen Frijters
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Marko Kokol
+  marko.kokol@semantika.eu
+
 */
 using System;
 using System.IO;
@@ -80,9 +105,6 @@ namespace IKVM.Reflection.Reader
         private Dictionary<TypeName, Type> types = new Dictionary<TypeName, Type>();
         private Dictionary<TypeName, LazyForwardedType> forwardedTypes = new Dictionary<TypeName, LazyForwardedType>();
 
-        //Diagnostics:
-        StackTrace typeDefsPopulateAt;
-
         private sealed class LazyForwardedType
         {
             private readonly int index;
@@ -120,6 +142,7 @@ namespace IKVM.Reflection.Reader
             {
                 WindowsRuntimeProjection.Patch(this, strings, ref imageRuntimeVersion, ref blobHeap);
             }
+
             if (assembly == null && AssemblyTable.records.Length != 0)
             {
                 assembly = new AssemblyReader(location, this);
@@ -563,6 +586,7 @@ namespace IKVM.Reflection.Reader
             {
                 assemblyRefs[index] = ResolveAssemblyRefImpl(ref AssemblyRef.records[index]);
             }
+
             return assemblyRefs[index];
         }
 
@@ -578,7 +602,13 @@ namespace IKVM.Reflection.Reader
                 rec.Culture == 0 ? "neutral" : GetString(rec.Culture),
                 rec.PublicKeyOrToken == 0 ? Empty<byte>.Array : (rec.Flags & PublicKey) == 0 ? GetBlobCopy(rec.PublicKeyOrToken) : AssemblyName.ComputePublicKeyToken(GetBlobCopy(rec.PublicKeyOrToken)),
                 rec.Flags);
-            return universe.Load(name, this, true);
+            var result = universe.Load(name, this, true);
+
+            if (result.GetType().IsAssignableFrom(typeof(MissingAssembly)))
+            {
+                Console.Error.WriteLine($"WARNING: Missing assembly {name} - you may need to add it to the command line!");
+            }
+            return result;
         }
 
         public override Guid ModuleVersionId

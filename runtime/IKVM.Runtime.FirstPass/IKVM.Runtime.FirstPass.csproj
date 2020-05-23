@@ -62,7 +62,7 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="." />
-    <Exec Command="..\..\bin\Debug\netcoreapp3.1\ikvmstub.exe -bootstrap IKVM.Runtime.dll -r:..\bin\$(Configuration)\netstandard2.0\IKVM.OpenJDK.Core.dll" />
+    <Exec Command="..\..\bin\$(Configuration)\netcoreapp3.1\ikvmstub.exe -bootstrap IKVM.Runtime.dll -r:..\bin\$(Configuration)\netstandard2.0\IKVM.OpenJDK.Core.dll" />
     <Copy SourceFiles="IKVM.Runtime.jar" DestinationFolder="..\..\bin\$(Configuration)\netstandard2.0" />
   </Target>
   <Target Name="AfterClean" AfterTargets="Clean">

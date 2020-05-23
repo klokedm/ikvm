@@ -20,6 +20,30 @@
   Jeroen Frijters
   jeroen@frijters.net
   
+  ======
+
+  Copyright (C) 2020 Marko Kokol, Semantika d.o.o.
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Marko Kokol
+  marko.kokol@semantika.si
+
+
 */
 using System;
 using System.Collections.Generic;
@@ -1442,7 +1466,8 @@ namespace IKVM.Internal
 
 			private static void CheckLoaderConstraints(MethodWrapper mw, MethodWrapper baseMethod)
 			{
-				if (mw.ReturnType != baseMethod.ReturnType)
+				//XXX: Comparisson by name hack
+				if (mw.ReturnType.Name != baseMethod.ReturnType.Name)
 				{
 					if (mw.ReturnType.IsUnloadable || baseMethod.ReturnType.IsUnloadable)
 					{
@@ -1470,7 +1495,8 @@ namespace IKVM.Internal
 				TypeWrapper[] there = baseMethod.GetParameters();
 				for (int i = 0; i < here.Length; i++)
 				{
-					if (here[i] != there[i])
+					//XXX: Comparisson by name hack
+					if (here[i].Name != there[i].Name)
 					{
 						if (here[i].IsUnloadable || there[i].IsUnloadable)
 						{

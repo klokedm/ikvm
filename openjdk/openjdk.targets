@@ -5,8 +5,8 @@
     <!-- Weird, just wanted to get it quickly -->
     <OpenJdkDirSlash>openjdk-8u45-b14</OpenJdkDirSlash>
     <SkipSystemCoreDependency>false</SkipSystemCoreDependency>
-    <IkvmstubExe>..\bin\Debug\netcoreapp3.1\ikvmstub.exe</IkvmstubExe>
-    <IkvmcExe>..\bin\Debug\netcoreapp3.1\ikvmc.exe</IkvmcExe>
+    <IkvmstubExe>..\bin\$(Configuration)\netcoreapp3.1\ikvmstub.exe</IkvmstubExe>
+    <IkvmcExe>..\bin\$(Configuration)\netcoreapp3.1\ikvmc.exe</IkvmcExe>
     <OpenJdkImplementationVersion>1.8.0</OpenJdkImplementationVersion>
     <OpenJdkSpecificationVersion>1.8</OpenJdkSpecificationVersion>
     <OpenJdkFullVersion>1.8.0_45-b14</OpenJdkFullVersion>
@@ -23,11 +23,11 @@
   <Target Name="StubJars" DependsOnTargets="SystemCore">
     <Exec Command="$(IkvmstubExe) -bootstrap netstandard -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.IO.FileSystem.AccessControl -forwarders" />
-    <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll -forwarders" />
+    <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap System.Drawing.Primitives -forwarders" />
 	<Exec Command="$(IkvmstubExe) -bootstrap Microsoft.Win32.Primitives -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -forwarders" />
-	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll -forwarders" />
+	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -forwarders" />
+	<Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netcoreapp3.1\System.Data.Odbc.dll -forwarders" />
   </Target>
 
   <Target Name="SystemCore" DependsOnTargets="" Condition=" !$(SkipSystemCoreDependency) ">
@@ -180,6 +180,7 @@
       <ResourceFiles Include="$(OpenJdkDir)\jaxp\src\**\*.res" />
       <ResourceFiles Include="$(OpenJdkDir)\jaxws\src\share\jaf_classes\**\*.properties" />
       <ResourceFiles Include="$(OpenJdkDir)\jaxws\src\share\jaxws_classes\**\*.properties" />
+      <ResourceFiles Include="$(OpenJdkDir)\jaxws\src\share\\Debug\$jaxws_classes\**\*.xml" />
       <ResourceFiles Include="$(OpenJdkDir)\jaxws\src\share\jaxws_classes\**\*.xml" />
     </ItemGroup>
     <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="tmpresources\%(RecursiveDir)" />
@@ -190,11 +191,11 @@
 
   <Target Name="Core" DependsOnTargets="ResponseGenTxt;ManifestMf;NashornVersion">
     <Copy SourceFiles="..\bin\$(Configuration)\netstandard2.1\IKVM.Runtime.dll" DestinationFolder="." />
-    <Copy SourceFiles="..\bin\$(Configuration)\netstandard2.1\IKVM.Runtime.dll" DestinationFolder="..\bin\Debug\netcoreapp3.1\" />
-    <Copy SourceFiles="..\bin\Debug\$(TargetFramework)\IKVM.AWT.WinForms.dll" DestinationFolder="." />
-    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:netstandard.dll -r:System.IO.FileSystem.AccessControl.dll -r:..\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll -r:System.Drawing.Primitives.dll -r:Microsoft.Win32.Primitives.dll -r:..\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -r:..\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll -r:System.Runtime.Extensions.dll -nowarn:110 -w4 -noparameterreflection @response.gen.txt" />
+    <Copy SourceFiles="..\bin\$(Configuration)\netstandard2.1\IKVM.Runtime.dll" DestinationFolder="..\bin\$(Configuration)\netcoreapp3.1\" />
+    <Copy SourceFiles="..\bin\$(Configuration)\$(TargetFramework)\IKVM.AWT.WinForms.dll" DestinationFolder="." />
+    <Exec Command="$(IkvmcExe) -version:$(AssemblyVersion) -compressresources -opt:fields -strictfinalfieldsemantics -removeassertions -target:library -sharedclassloader -r:netstandard.dll -r:System.Private.CoreLib.dll -r:System.Runtime.dll -r:System.Runtime.InteropServices.dll -r:System.IO.FileSystem.AccessControl.dll -r:..\bin\$(Configuration)\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll -r:System.Drawing.Primitives.dll -r:Microsoft.Win32.Primitives.dll -r:..\bin\$(Configuration)\netcoreapp3.1\System.Configuration.ConfigurationManager.dll -r:System.Threading.Thread.dll -r:System.Threading.ThreadPool.dll -r:System.IO.FileSystem.Watcher.dll -r:System.Threading.dll -r:System.Diagnostics.StackTrace.dll -r:IKVM.Runtime.dll -r:..\bin\$(Configuration)\netcoreapp3.1\System.Data.Odbc.dll -r:System.Runtime.Extensions.dll -nowarn:110 -w4 -noparameterreflection @response.gen.txt" />
     <CallTarget Targets="Peverify" />
-    <Exec Command="..\tools\bin\$(Configuration)\netcoreapp3.1\depcheck.exe response.txt dependencies.txt" />
+    <!--<Exec Command="..\tools\bin\$(Configuration)\netcoreapp3.1\depcheck.exe response.txt dependencies.txt" />-->
     <ItemGroup>
       <IkvmDllFiles Include="IKVM.OpenJDK.*.dll" />
     </ItemGroup>
