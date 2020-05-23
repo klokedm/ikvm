@@ -12,4 +12,4 @@
 
 ## Known Issues
 
-This is work in progress. Currently the project builds, but ikvmc (IKVM Compiler) is unable to produce the IKVM.OpenJDK DLLs form the compiled java classes.
+This is work in progress. The compiler builds and the OpenJDK now gets produced against the .NET Standard libraries + Platform Extensions, but has not yet been tested extensively.
