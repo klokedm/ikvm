@@ -95,7 +95,7 @@
   </Target>
 
   <PropertyGroup>
-    <Classpath>netstandard.jar;System.Runtime.jar;System.IO.FileSystem.AccessControl.jar;System.Runtime.InteropServices.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
+    <Classpath>netstandard.jar;System.IO.FileSystem.AccessControl.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
   </PropertyGroup>
   <Target Name="Rmi">
     <PropertyGroup>

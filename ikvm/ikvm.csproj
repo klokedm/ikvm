@@ -16,31 +16,26 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.OpenJDK.Util, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.OpenJDK.Util.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Release\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Util, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IKVM.OpenJDK.Util">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Release\netcoreapp3.1\IKVM.OpenJDK.Util.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\awt\IKVM.AWT.WinForms\IKVM.AWT.WinForms.csproj" />
-    <!--<ProjectReference Include="..\runtime\IKVM.Runtime\IKVM.Runtime.csproj" />-->
+
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
+    <Reference Include="IKVM.OpenJDK.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.OpenJDK.Util.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
