@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <OutputPath>..\..\bin\$(Configuration)</OutputPath>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <DefineConstants>$(DefineConstants);WHIDBEY;OPENJDK</DefineConstants>
@@ -13,14 +13,25 @@
     <Description>JVM for Mono and .NET</Description>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\IKVM.OpenJDK.Core.dll</HintPath>
+      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\$(Configuration)\IKVM.Runtime.dll</HintPath>
+      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Release\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Release\netcoreapp3.1\IKVM.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 

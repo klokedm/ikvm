@@ -1658,6 +1658,7 @@ namespace IKVM.Internal
 
         private static TypeWrapper GetBaseTypeWrapper(Type type)
         {
+            //Console.WriteLine($"Base Type of type {type.FullName}");
             if (type.IsInterface)
             {
                 return null;
@@ -1671,14 +1672,17 @@ namespace IKVM.Internal
                 {
                     return CoreClasses.java.lang.Object.Wrapper;
                 }
+                //Console.WriteLine($"Returning {ClassLoaderWrapper.GetWrapperFromType(type).Name}");
                 return ClassLoaderWrapper.GetWrapperFromType(type);
             }
             else if (ClassLoaderWrapper.IsRemappedType(type.BaseType))
             {
+                //Console.WriteLine($"Returning {ClassLoaderWrapper.GetWrapperFromType(type.BaseType).Name}");
                 return GetWrapperFromDotNetType(type.BaseType);
             }
             else
             {
+                //Console.WriteLine($"Returning {ClassLoaderWrapper.GetWrapperFromType(type.BaseType).Name}");
                 return ClassLoaderWrapper.GetWrapperFromType(type.BaseType);
             }
         }

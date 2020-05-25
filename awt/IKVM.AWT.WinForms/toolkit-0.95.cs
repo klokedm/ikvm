@@ -56,7 +56,6 @@ using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Reflection;
 using java.net;
@@ -66,6 +65,7 @@ using ikvm.runtime;
 using sun.awt;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace ikvm.awt
 {
@@ -1045,7 +1045,7 @@ namespace ikvm.awt
 
 	sealed class NetMenuBarPeer : java.awt.peer.MenuBarPeer
 	{
-		internal readonly MainMenu menu = new MainMenu();
+		internal readonly MenuStrip menu = new MenuStrip();
 
 		internal NetMenuBarPeer(java.awt.MenuBar target)
 		{
@@ -1067,12 +1067,12 @@ namespace ikvm.awt
 			{
 				m.addNotify();
 			}
-			NetToolkit.Invoke(delegate { menu.MenuItems.Add(((NetMenuPeer)m.getPeer()).menu); });
+			NetToolkit.Invoke(delegate { menu.Items.Add(((NetMenuPeer)m.getPeer()).menu); });
 		}
 
 		public void delMenu(int i)
 		{
-			NetToolkit.Invoke(delegate { menu.MenuItems.RemoveAt(i); });
+			NetToolkit.Invoke(delegate { menu.Items.RemoveAt(i); });
 		}
 
 		public void dispose()
@@ -1088,7 +1088,7 @@ namespace ikvm.awt
 
 	sealed class NetMenuPeer : java.awt.peer.MenuPeer
 	{
-		internal readonly MenuItem menu = new MenuItem();
+		internal readonly ToolStripMenuItem menu = new ToolStripMenuItem();
 
 		internal NetMenuPeer(java.awt.Menu target)
 		{
@@ -1108,22 +1108,22 @@ namespace ikvm.awt
 			}
 			if (item.getPeer() is NetMenuItemPeer)
 			{
-				NetToolkit.Invoke(delegate { menu.MenuItems.Add(((NetMenuItemPeer)item.getPeer()).menuitem); });
+				NetToolkit.Invoke(delegate { menu.DropDownItems.Add(((NetMenuItemPeer)item.getPeer()).menuitem); });
 			}
 			else
 			{
-				NetToolkit.Invoke(delegate { menu.MenuItems.Add(((NetMenuPeer)item.getPeer()).menu); });
+				NetToolkit.Invoke(delegate { menu.DropDownItems.Add(((NetMenuPeer)item.getPeer()).menu); });
 			}
 		}
 
 		public void addSeparator()
 		{
-			NetToolkit.Invoke(delegate { menu.MenuItems.Add(new MenuItem("-")); });
+			NetToolkit.Invoke(delegate { menu.DropDownItems.Add(new ToolStripMenuItem("-")); });
 		}
 
 		public void delItem(int i)
 		{
-			NetToolkit.Invoke(delegate { menu.MenuItems.RemoveAt(i); });
+			NetToolkit.Invoke(delegate { menu.DropDownItems.RemoveAt(i); });
 		}
 
 		public void dispose()
@@ -1160,7 +1160,7 @@ namespace ikvm.awt
 	class NetMenuItemPeer : java.awt.peer.MenuItemPeer
 	{
 		protected readonly java.awt.MenuItem target;
-		internal readonly MenuItem menuitem = new MenuItem();
+		internal readonly ToolStripMenuItem menuitem = new ToolStripMenuItem();
 
 		internal NetMenuItemPeer(java.awt.MenuItem target)
 		{
@@ -2008,8 +2008,9 @@ namespace ikvm.awt
 			control.LostFocus += new EventHandler(OnLostFocus);
 			//control.Leave += new EventHandler(OnBoundsChanged);
 			control.Paint += new PaintEventHandler(OnPaint);
-			control.ContextMenu = new ContextMenu();
-			control.ContextMenu.Popup += new EventHandler(OnPopupMenu);
+			//TODO: XXX: This needs to be changed to .NET Core compatible
+            control.ContextMenuStrip = new ContextMenuStrip();
+			control.ContextMenuStrip.Opened += new EventHandler(OnPopupMenu);
 		    control.AllowDrop = true;
 		    control.DragDrop += new DragEventHandler(OnDragDrop);
             control.DragOver += new DragEventHandler(OnDragOver);
@@ -2039,8 +2040,8 @@ namespace ikvm.awt
             control.DragOver -= new DragEventHandler(OnDragOver);
             control.DragLeave -= new EventHandler(OnDragLeave);
             control.DragEnter -= new DragEventHandler(OnDragEnter);
-            if (control.ContextMenu != null)
-                control.ContextMenu.Popup -= new EventHandler(OnPopupMenu);
+            if (control.ContextMenuStrip != null)
+                control.ContextMenuStrip.Opened -= new EventHandler(OnPopupMenu);
         }
 
 		protected void SendEvent(java.awt.AWTEvent evt)
@@ -4107,7 +4108,7 @@ namespace ikvm.awt
 			_insets.top = y;
 			_insets.left = x;
 			_insets.bottom = control.Height - client.Height - y;
-			if (control.Menu != null)
+			if (control.MainMenuStrip != null)
 			{
 				_insets.bottom += SystemInformation.MenuHeight;
 			}
@@ -4348,7 +4349,7 @@ namespace ikvm.awt
 			{
 				NetToolkit.Invoke(delegate
 				{
-					control.Menu = null;
+					control.MainMenuStrip = null;
 					CalcInsetsImpl();
 				});
 			}
@@ -4357,7 +4358,7 @@ namespace ikvm.awt
 				mb.addNotify();
 				NetToolkit.Invoke(delegate
 				{
-					control.Menu = ((NetMenuBarPeer)mb.getPeer()).menu;
+					control.MainMenuStrip = ((NetMenuBarPeer)mb.getPeer()).menu;
 					CalcInsetsImpl();
 				});
 			}
@@ -4875,7 +4876,7 @@ namespace ikvm.awt
     sealed class NetPopupMenuPeer : java.awt.peer.PopupMenuPeer
     {
 		private readonly java.awt.PopupMenu target;
-		private readonly ContextMenu menu = new ContextMenu();
+		private readonly ContextMenuStrip menu = new ContextMenuStrip();
 
 		internal NetPopupMenuPeer(java.awt.PopupMenu target)
 		{
@@ -4925,7 +4926,7 @@ namespace ikvm.awt
 			{
 				for (int i = 0; i < target.getItemCount(); i++)
 				{
-					menu.MenuItems[i].Enabled = b && target.getItem(i).isEnabled();
+					menu.Items[i].Enabled = b && target.getItem(i).isEnabled();
 				}
 			});
 		}
@@ -4942,22 +4943,22 @@ namespace ikvm.awt
 			}
 			if (item.getPeer() is NetMenuItemPeer)
 			{
-				NetToolkit.Invoke(delegate { menu.MenuItems.Add(((NetMenuItemPeer)item.getPeer()).menuitem); });
+				NetToolkit.Invoke(delegate { menu.Items.Add(((NetMenuItemPeer)item.getPeer()).menuitem); });
 			}
 			else
 			{
-				NetToolkit.Invoke(delegate { menu.MenuItems.Add(((NetMenuPeer)item.getPeer()).menu); });
+				NetToolkit.Invoke(delegate { menu.Items.Add(((NetMenuPeer)item.getPeer()).menu); });
 			}
 		}
 
         public void addSeparator()
         {
-			NetToolkit.Invoke(delegate { menu.MenuItems.Add(new MenuItem("-")); });
+			NetToolkit.Invoke(delegate { menu.Items.Add(new ToolStripMenuItem("-")); });
         }
 
         public void delItem(int i)
         {
-			NetToolkit.Invoke(delegate { menu.MenuItems.RemoveAt(i); });
+			NetToolkit.Invoke(delegate { menu.Items.RemoveAt(i); });
 		}
     }
 

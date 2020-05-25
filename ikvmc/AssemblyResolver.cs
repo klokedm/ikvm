@@ -103,12 +103,12 @@ namespace IKVM.Internal
                         // to avoid problems (i.e. weird exceptions), we don't allow assemblies to load that reference a newer version of mscorlib
                         foreach (AssemblyName asmref in module.GetReferencedAssemblies())
                         {
-                            if (asmref.Name.IsReferenceCoreLib() && asmref.Version > mscorlibVersion)
+                            /*if (asmref.Name.IsReferenceCoreLib() && asmref.Version > mscorlibVersion)
                             {
                                 Console.Error.WriteLine(asmref.FullName + " > " + mscorlibVersion);
                                 Console.Error.WriteLine("Error: unable to load assembly '{0}' as it depends on a higher version of mscorlib than the one currently loaded", path);
                                 Environment.Exit(1);
-                            }
+                            }*/
                         }
                     }
                     Assembly asm = universe.LoadAssembly(module);
@@ -482,7 +482,7 @@ namespace IKVM.Internal
             {
                 foreach (string dir in libpath)
                 {
-                    Console.Error.WriteLine($"Searching in directory {dir}");
+                    //Console.Error.WriteLine($"Searching in directory {dir}");
                     string path = Path.Combine(dir, file);
                     if (File.Exists(path))
                     {

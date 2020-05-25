@@ -268,7 +268,7 @@
             </constructor>
             <constructor sig="(Ljava.lang.String;)V" modifiers="public">
                 <parameter name="original" />
-                <redirect class="System.String, System.Private.CoreLib" name="Copy" type="static" sig="(Ljava.lang.String;)Ljava.lang.String;" />
+                <redirect class="System.String, netstandard" name="Copy" type="static" sig="(Ljava.lang.String;)Ljava.lang.String;" />
             </constructor>
             <constructor sig="(Ljava.lang.StringBuffer;)V" modifiers="public">
                 <parameter name="buffer" />

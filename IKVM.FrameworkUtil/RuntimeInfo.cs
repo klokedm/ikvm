@@ -22,6 +22,7 @@
   
 */
 
+using System.IO;
 using System.Reflection;
 
 namespace IKVM.FrameworkUtil
@@ -39,24 +40,22 @@ namespace IKVM.FrameworkUtil
     public static class RuntimeInfo
     {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   The reference core library full name. </summary>
+        /// <summary>   Location of the reference core library. 
+        ///             XXX:THIS IS A HACK. We need to introduce either code to support the switching 
+        ///             between different SDK targets on load or some SDK locator logic
+        /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static readonly string ReferenceCoreLibFullName = "netstandard, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = cc7b13ffcd2ddd51";
+        public static readonly string ReferenceCoreLibLocation = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\..\\netstandard2.1\\refs\\netstandard.dll";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   The reference core library assembly. </summary>
+        /// <summary>   The reference core library full name. </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static readonly Assembly ReferenceCoreLibAssembly = Assembly.Load(ReferenceCoreLibFullName);
+        public static readonly string ReferenceCoreLibFullName = AssemblyName.GetAssemblyName(ReferenceCoreLibLocation).FullName;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Name of the reference core library. </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static readonly string ReferenceCoreLibName = ReferenceCoreLibAssembly.GetName().Name;
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   Location of the reference core library. </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static readonly string ReferenceCoreLibLocation = ReferenceCoreLibAssembly.Location;
+        public static readonly string ReferenceCoreLibName = AssemblyName.GetAssemblyName(ReferenceCoreLibLocation).Name;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Name of the private core library. </summary>

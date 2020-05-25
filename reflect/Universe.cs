@@ -226,7 +226,8 @@ namespace IKVM.Reflection
 
         public Assembly Mscorlib
         {
-            get { return Load(RuntimeInfo.ReferenceCoreLibFullName); }
+            get { return LoadFile(RuntimeInfo.ReferenceCoreLibLocation); }
+            //get { return Load(RuntimeInfo.ReferenceCoreLibName); }
         }
 
         private Type ImportMscorlibType(string ns, string name)
@@ -615,7 +616,7 @@ namespace IKVM.Reflection
         public RawModule OpenRawModule(string path)
         {
             path = Path.GetFullPath(path);
-            Console.Error.WriteLine($"Loading module at: {path}");
+            //Console.Error.WriteLine($"Loading module at: {path}");
             FileStream fs = null;
             RawModule module;
             try
