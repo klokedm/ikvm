@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
-    <OutputPath>..\..\bin\netcoreapp3.1</OutputPath>
+    <OutputPath>..\..\bin\$(Configuration)</OutputPath>
     <DefineConstants>$(DefineConstants);EMITTERS</DefineConstants>
     <NoWarn>$(NoWarn);169;649</NoWarn>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

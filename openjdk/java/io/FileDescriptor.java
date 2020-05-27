@@ -21,6 +21,8 @@
  * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
  * or visit www.oracle.com if you need additional information or have any
  * questions.
+ * =========
+ * Modified by Marko Kokol for .NET Core Compatibility
  */
 
 package java.io;
@@ -63,6 +65,22 @@ public final class FileDescriptor {
 
     @ikvm.lang.Property(get = "get_handle")
     private long handle;
+
+    /**
+     * FIX / HACK
+     *    The .NET Core utilizes the P/Invoke infrastructure for the OS dependent call for opening
+     *    the file in appendable mode. 
+     *    The result of this is the Name of the stream is returned as "[Unknown]"", and this is used
+     *    down the road for example for the file locking table -> causing the system to incorrectly
+     *    lock independent files as they are all considered to have the same name.
+     *    To get around this we store the name *before* we construct the stream and use this in the
+     *    rest of the code
+     */
+    private String streamName;
+
+    public String getName() {
+        return streamName;
+    }
 
     private Closeable parent;
     private List<Closeable> otherParents;
@@ -363,6 +381,7 @@ public final class FileDescriptor {
         try
         {
             stream = open(name, FileMode.wrap(fileMode), FileAccess.wrap(fileAccess));
+            streamName = name;
         }
         catch (cli.System.Security.SecurityException x1)
         {
@@ -716,10 +735,11 @@ public final class FileDescriptor {
     }
 
     @ikvm.lang.Internal
-    public static FileDescriptor fromStream(cli.System.IO.Stream stream)
+    public static FileDescriptor fromStream(cli.System.IO.Stream stream, String streamName)
     {
         FileDescriptor desc = new FileDescriptor();
         desc.stream = stream;
+        desc.streamName = streamName;
         return desc;
     }
 

@@ -344,6 +344,8 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
         return FileChannelImpl.open(open(npath.path, mode, rights, share, options), npath.path, read, write, append, null);
     }
 
+    private native static cli.System.IO.FileStream createFile0(String path, cli.System.IO.FileMode fileMode, cli.System.Security.AccessControl.FileSystemRights fileSystemRights, cli.System.IO.FileShare fileShare, int bufferSize, cli.System.IO.FileOptions fileOptions);
+
     private static FileDescriptor open(String path, int mode, int rights, int share, int options) throws IOException
     {
         SecurityManager sm = System.getSecurityManager();
@@ -372,16 +374,6 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
             if (false) throw new cli.System.IO.IOException();
             if (false) throw new cli.System.Security.SecurityException();
             if (false) throw new cli.System.UnauthorizedAccessException();
-            // TODO NET_CORE_INCOMPAT
-            // TODO NET_STANDARD_INCOMPAT
-            //
-            // https://github.com/dotnet/corefx/issues/39920
-            // https://github.com/dotnet/runtime/issues/30435#issuecomment-590609103
-            if ((rights & FileSystemRights.AppendData) == FileSystemRights.AppendData)
-            {
-                throw new UnsupportedOperationException(
-                    "Atomically appending to files is not supported.");
-            }
 
             boolean readOnly    = rights == FileSystemRights.Read;
             boolean writeOnly   = rights == FileSystemRights.Write;
@@ -389,14 +381,15 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
                                   writeOnly ? FileAccess.Write  :
                                               FileAccess.ReadWrite;
 
-            return FileDescriptor.fromStream(
-                new FileStream(
-                    path,
-                    FileMode.wrap(mode),
-                    FileAccess.wrap(access),
-                    FileShare.wrap(share),
-                    8,
-                    FileOptions.wrap(options)));
+            return FileDescriptor.fromStream(createFile0(
+                                                path, 
+                                                FileMode.wrap(mode), 
+                                                FileSystemRights.wrap(rights), 
+                                                FileShare.wrap(FileShare.ReadWrite), 
+                                                8, 
+                                                FileOptions.wrap(options)),
+                                            path 
+                    );
         }
         catch (cli.System.ArgumentException x)
         {
@@ -1143,6 +1136,10 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
 
             public boolean isDirectory()
             {
+                cli.System.Console.WriteLine("Reading directory attribute for: " + info.get_Name());
+                cli.System.Console.WriteLine("Reading directory attribute value: " + (int)(info.get_Attributes().Value));
+                cli.System.Console.WriteLine("Comparing to: " + cli.System.IO.FileAttributes.Directory);
+                cli.System.Console.WriteLine("Result: " + (info.get_Attributes().Value & cli.System.IO.FileAttributes.Directory));
                 return (info.get_Attributes().Value & cli.System.IO.FileAttributes.Directory) != 0;
             }
 

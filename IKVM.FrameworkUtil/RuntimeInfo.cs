@@ -45,7 +45,7 @@ namespace IKVM.FrameworkUtil
         ///             between different SDK targets on load or some SDK locator logic
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static readonly string ReferenceCoreLibLocation = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\..\\netstandard2.1\\refs\\netstandard.dll";
+        public static readonly string ReferenceCoreLibLocation = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\..\\netstandard2.1\\publish\\refs\\netstandard.dll";
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   The reference core library full name. </summary>

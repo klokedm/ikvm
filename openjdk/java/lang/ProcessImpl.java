@@ -28,7 +28,7 @@
  * Modified for IKVM by Jeroen Frijters
  */
 
-/* IKVM for .NET Core modified by Marko Kokol */
+/* Modified for IKVM for .NET Core by Marko Kokol */
 
 package java.lang;
 
@@ -419,7 +419,7 @@ final class ProcessImpl extends Process {
             if (stdHandles[0] == null)
                 stdin_stream = ProcessBuilder.NullOutputStream.INSTANCE;
             else {
-                FileDescriptor stdin_fd = FileDescriptor.fromStream(stdHandles[0]);
+                FileDescriptor stdin_fd = FileDescriptor.fromStream(stdHandles[0], null);
                 stdin_stream = new BufferedOutputStream(
                     new FileOutputStream(stdin_fd));
             }
@@ -427,7 +427,7 @@ final class ProcessImpl extends Process {
             if (stdHandles[1] == null)
                 stdout_stream = ProcessBuilder.NullInputStream.INSTANCE;
             else {
-                FileDescriptor stdout_fd = FileDescriptor.fromStream(stdHandles[1]);
+                FileDescriptor stdout_fd = FileDescriptor.fromStream(stdHandles[1], null);
                 stdout_stream = new BufferedInputStream(
                     new FileInputStream(stdout_fd));
             }
@@ -435,7 +435,7 @@ final class ProcessImpl extends Process {
             if (stdHandles[2] == null)
                 stderr_stream = ProcessBuilder.NullInputStream.INSTANCE;
             else {
-                FileDescriptor stderr_fd = FileDescriptor.fromStream(stdHandles[2]);
+                FileDescriptor stderr_fd = FileDescriptor.fromStream(stdHandles[2], null);
                 stderr_stream = new FileInputStream(stderr_fd);
             }
 
@@ -784,6 +784,8 @@ final class ProcessImpl extends Process {
 
     private static native int parseCommandString(String cmdstr);
 
+    private static native FileStream openStreamForAtomicAppend(String name);
+
     /**
      * Opens a file for atomic append. The file is created if it doesn't
      * already exist.
@@ -798,13 +800,8 @@ final class ProcessImpl extends Process {
             if (false) throw new cli.System.IO.IOException();
             if (false) throw new cli.System.Security.SecurityException();
             if (false) throw new cli.System.UnauthorizedAccessException();
-            // TODO NET_CORE_INCOMPAT
-            // TODO NET_STANDARD_INCOMPAT
-            //
-            // https://github.com/dotnet/corefx/issues/39920
-            // https://github.com/dotnet/runtime/issues/30435#issuecomment-590609103
-            //return FileDescriptor.fromStream(new FileStream(path, FileMode.wrap(FileMode.Append), FileSystemRights.wrap(FileSystemRights.AppendData), FileShare.wrap(FileShare.ReadWrite), 1, FileOptions.wrap(FileOptions.None)));
-			return FileDescriptor.fromStream(cli.System.IO.FileSystemAclExtensions.Create(new cli.System.IO.FileInfo(path), FileMode.wrap(FileMode.Append), FileSystemRights.wrap(FileSystemRights.AppendData), FileShare.wrap(FileShare.ReadWrite), 1, FileOptions.wrap(FileOptions.None), null));
+            
+			return FileDescriptor.fromStream(openStreamForAtomicAppend(path), path);
         } catch (cli.System.ArgumentException x) {
             throw new IOException(x.getMessage());
         } catch (cli.System.IO.IOException x) {

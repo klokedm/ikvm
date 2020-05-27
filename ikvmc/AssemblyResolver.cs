@@ -27,6 +27,7 @@ using System.Text;
 using System.IO;
 using IKVM.Reflection;
 using IKVM.FrameworkUtil;
+using System.Linq;
 
 namespace IKVM.Internal
 {
@@ -85,7 +86,7 @@ namespace IKVM.Internal
                 mscorlibVersion = universe.Mscorlib.GetName().Version;
             }
 #if STATIC_COMPILER
-			universe.AssemblyResolve += AssemblyResolve;
+            universe.AssemblyResolve += AssemblyResolve;
 #else
             universe.AssemblyResolve += LegacyAssemblyResolve;
 #endif
@@ -262,7 +263,10 @@ namespace IKVM.Internal
 
             if (previousMatch != null)
             {
-                if (previousMatchLevel == 2)
+                //XXX: This is incorrect!
+                return universe.Load(previousMatch.FullName);
+                //TODO: Rework this logic
+                /*if (previousMatchLevel == 2)
                 {
                     EmitWarning(WarningId.HigherVersion, "assuming assembly reference \"{0}\" matches \"{1}\", you may need to supply runtime policy.", previousMatch.FullName, name.FullName);
                     return universe.Load(previousMatch.FullName);
@@ -276,9 +280,13 @@ namespace IKVM.Internal
                 else
                 {
                     Console.Error.WriteLine("Error: Assembly '{0}' was requested which is a higher version than referenced assembly '{1}'", name.FullName, previousMatch.FullName);
+                    if (args.RequestingAssembly != null)
+                    {
+                        Console.Error.WriteLine("Error: Request was made by the following assembly: '{0}'", args.RequestingAssembly.FullName);
+                    }
                     Environment.Exit(1);
                     return null;
-                }
+                }*/
             }
             else if (args.RequestingAssembly != null)
             {

@@ -134,7 +134,8 @@ class FileDispatcherImpl extends FileDispatcher
     int truncate(FileDescriptor fd, long size) throws IOException {
         if (append) {
             // HACK in append mode we're not allowed to truncate, so we try to reopen the file and truncate that
-            try (FileOutputStream fos = new FileOutputStream(((FileStream)fd.getStream()).get_Name())) {
+            // Also, replaced the stream name with FD name
+            try (FileOutputStream fos = new FileOutputStream(fd.getName())) {
                 fos.getFD().setLength(size);
             }
         } else {

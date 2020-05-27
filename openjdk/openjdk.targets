@@ -17,11 +17,12 @@
 
   <Target Name="BuildClasses" DependsOnTargets="StubJars;AllSourcesGenLst;AssemblyInfoJava;PropertyConstantsJava">
     <Message Text="BuildClasses target is running..." Importance="high" />
-    <Exec Command="javac -target 8 -J-Xmx1536M -g -nowarn -implicit:none -parameters -cp dummy -bootclasspath netstandard.jar;System.IO.FileSystem.AccessControl.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar @allsources.gen.lst" />
+    <Exec Command="javac -target 8 -J-Xmx1536M -g -nowarn -implicit:none -parameters -cp dummy -bootclasspath netstandard.jar;System.Security.AccessControl.jar;System.IO.FileSystem.AccessControl.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar @allsources.gen.lst" />
   </Target>
 
   <Target Name="StubJars" DependsOnTargets="SystemCore">
     <Exec Command='$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netstandard2.1\publish\refs\netstandard.dll -forwarders' />
+    <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netstandard2.1\publish\refs\System.Security.AccessControl.dll -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netstandard2.1\publish\refs\System.IO.FileSystem.AccessControl.dll -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netstandard2.1\publish\refs\System.Drawing.Common.dll -forwarders" />
     <Exec Command="$(IkvmstubExe) -bootstrap ..\bin\$(Configuration)\netstandard2.1\publish\refs\System.Drawing.Primitives.dll -forwarders" />
@@ -95,7 +96,7 @@
   </Target>
 
   <PropertyGroup>
-    <Classpath>netstandard.jar;System.IO.FileSystem.AccessControl.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
+    <Classpath>netstandard.jar;System.Security.AccessControl.jar;System.IO.FileSystem.AccessControl.jar;System.Drawing.Common.jar;System.Drawing.Primitives;Microsoft.Win32.Primitives;System.Configuration.ConfigurationManager.jar;System.Data.Odbc.jar;..\bin\$(Configuration)\$(TargetFramework)\IKVM.Runtime.jar;$(OpenJdkDirSlash)/jdk/src/share/classes;$(OpenJdkDirSlash)/corba/src/share/classes;$(OpenJdkDirSlash)/build/linux-x86_64-normal-server-release/jdk/gensrc</Classpath>
   </PropertyGroup>
   <Target Name="Rmi">
     <PropertyGroup>

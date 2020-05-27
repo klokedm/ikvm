@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NioTest", "NioTest.csproj", "{089919E5-B86C-4342-A563-73A0FC9DD274}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{089919E5-B86C-4342-A563-73A0FC9DD274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{089919E5-B86C-4342-A563-73A0FC9DD274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{089919E5-B86C-4342-A563-73A0FC9DD274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{089919E5-B86C-4342-A563-73A0FC9DD274}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9220411-25AE-4965-A008-38BF94AE3B99}
+	EndGlobalSection
+EndGlobal
