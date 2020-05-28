@@ -16,11 +16,11 @@
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <Reference Include="IKVM.OpenJDK.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
+      <HintPath>..\bin\Release\netcoreapp3.1\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Debug\netcoreapp3.1\IKVM.Runtime.dll</HintPath>
+      <HintPath>..\bin\Release\netcoreapp3.1\IKVM.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   

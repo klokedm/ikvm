@@ -38,4 +38,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\runtime\IKVM.Runtime.JNI\IKVM.Runtime.JNI.csproj" />
+  </ItemGroup>
+
 </Project>

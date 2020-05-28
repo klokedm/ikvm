@@ -1023,6 +1023,7 @@ namespace IKVM.Runtime
 					? (Exception)new java.lang.ClassCastException("bootstrap method failed to produce a CallSite")
 					: new java.lang.invoke.WrongMethodTypeException()), MapFlags.None);
 				java.lang.invoke.MethodType type = LoadMethodType<T>();
+				
 				java.lang.invoke.MethodHandle exc = x is java.lang.BootstrapMethodError
 					? java.lang.invoke.MethodHandles.constant(typeof(java.lang.BootstrapMethodError), x)
 					: java.lang.invoke.MethodHandles.publicLookup().findConstructor(typeof(java.lang.BootstrapMethodError), java.lang.invoke.MethodType.methodType(typeof(void), typeof(string), typeof(Exception)))

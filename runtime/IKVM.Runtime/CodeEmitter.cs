@@ -130,25 +130,25 @@ namespace IKVM.Internal
 
         enum CodeType : short
         {
-            Unreachable,
-            OpCode,
-            BeginScope,
-            EndScope,
-            DeclareLocal,
-            ReleaseTempLocal,
-            SequencePoint,
-            LineNumber,
-            Label,
-            BeginExceptionBlock,
-            BeginCatchBlock,
-            BeginFaultBlock,
-            BeginFinallyBlock,
-            EndExceptionBlock,
-            MemoryBarrier,
-            TailCallPrevention,
-            ClearStack,
-            MonitorEnter,
-            MonitorExit,
+            Unreachable=0,
+            OpCode=1,
+            BeginScope=2,
+            EndScope=3,
+            DeclareLocal=4,
+            ReleaseTempLocal=5,
+            //SequencePoint=6,
+            LineNumber=7,
+            Label=8,
+            BeginExceptionBlock=9,
+            BeginCatchBlock=10,
+            BeginFaultBlock=11,
+            BeginFinallyBlock=12,
+            EndExceptionBlock=13,
+            MemoryBarrier=14,
+            TailCallPrevention=15,
+            ClearStack=16,
+            MonitorEnter=17,
+            MonitorExit=18,
         }
 
         enum CodeTypeFlags : short
@@ -285,8 +285,8 @@ namespace IKVM.Internal
                         case CodeType.Label:
                         case CodeType.BeginExceptionBlock:
                             return 0;
-                        case CodeType.SequencePoint:
-                            return 1;
+                        //case CodeType.SequencePoint:
+                        //    return 1;
                         case CodeType.BeginCatchBlock:
                         case CodeType.BeginFaultBlock:
                         case CodeType.BeginFinallyBlock:
@@ -500,10 +500,8 @@ namespace IKVM.Internal
                     break;
                 case CodeType.ReleaseTempLocal:
                     break;
-                case CodeType.SequencePoint:
-                    throw new InvalidOperationException("Not supported on .NET Core");
-                    // we emit a nop to make sure we always have an instruction associated with the sequence point
-                    break;
+                //case CodeType.SequencePoint:
+                //    throw new InvalidOperationException("Not supported on .NET Core");
                 case CodeType.Label:
                     ilgen_real.MarkLabel(((CodeEmitterLabel)data).Label);
                     break;
@@ -557,83 +555,65 @@ namespace IKVM.Internal
             if (arg == null)
             {
                 ilgen_real.Emit(opcode);
+                return;
             }
-            else if (arg is int)
+            switch (arg)
             {
-                ilgen_real.Emit(opcode, (int)arg);
-            }
-            else if (arg is long)
-            {
-                ilgen_real.Emit(opcode, (long)arg);
-            }
-            else if (arg is MethodInfo)
-            {
-                ilgen_real.Emit(opcode, (MethodInfo)arg);
-            }
-            else if (arg is ConstructorInfo)
-            {
-                ilgen_real.Emit(opcode, (ConstructorInfo)arg);
-            }
-            else if (arg is FieldInfo)
-            {
-                ilgen_real.Emit(opcode, (FieldInfo)arg);
-            }
-            else if (arg is sbyte)
-            {
-                ilgen_real.Emit(opcode, (sbyte)arg);
-            }
-            else if (arg is byte)
-            {
-                ilgen_real.Emit(opcode, (byte)arg);
-            }
-            else if (arg is short)
-            {
-                ilgen_real.Emit(opcode, (short)arg);
-            }
-            else if (arg is float)
-            {
-                ilgen_real.Emit(opcode, (float)arg);
-            }
-            else if (arg is double)
-            {
-                ilgen_real.Emit(opcode, (double)arg);
-            }
-            else if (arg is string)
-            {
-                ilgen_real.Emit(opcode, (string)arg);
-            }
-            else if (arg is Type)
-            {
-                ilgen_real.Emit(opcode, (Type)arg);
-            }
-            else if (arg is CodeEmitterLocal)
-            {
-                CodeEmitterLocal local = (CodeEmitterLocal)arg;
-                local.Emit(ilgen_real, opcode);
-            }
-            else if (arg is CodeEmitterLabel)
-            {
-                CodeEmitterLabel label = (CodeEmitterLabel)arg;
-                ilgen_real.Emit(opcode, label.Label);
-            }
-            else if (arg is CodeEmitterLabel[])
-            {
-                CodeEmitterLabel[] labels = (CodeEmitterLabel[])arg;
-                Label[] real = new Label[labels.Length];
-                for (int i = 0; i < labels.Length; i++)
-                {
-                    real[i] = labels[i].Label;
-                }
-                ilgen_real.Emit(opcode, real);
-            }
-            else if (arg is CalliWrapper)
-            {
-                CalliWrapper args = (CalliWrapper)arg;
-                ilgen_real.EmitCalli(opcode, args.unmanagedCallConv, args.returnType, args.parameterTypes);
-            }
-            else
-            {
-                throw new InvalidOperationException();
+                case int iarg:
+                    ilgen_real.Emit(opcode, iarg);
+                    break;
+                case long larg:
+                    ilgen_real.Emit(opcode, larg);
+                    break;
+                case MethodInfo miarg:
+                    ilgen_real.Emit(opcode, miarg);
+                    break;
+                case ConstructorInfo ciarg:
+                    ilgen_real.Emit(opcode, ciarg);
+                    break;
+                case FieldInfo fiarg:
+                    ilgen_real.Emit(opcode, fiarg);
+                    break;
+                case sbyte sbyarg:
+                    ilgen_real.Emit(opcode, sbyarg);
+                    break;
+                case byte byarg:
+                    ilgen_real.Emit(opcode, byarg);
+                    break;
+                case short sharg:
+                    ilgen_real.Emit(opcode, sharg);
+                    break;
+                case float flarg:
+                    ilgen_real.Emit(opcode, flarg);
+                    break;
+                case double darg:
+                    ilgen_real.Emit(opcode, darg);
+                    break;
+                case string strarg:
+                    ilgen_real.Emit(opcode, strarg);
+                    break;
+                case Type tyarg:
+                    ilgen_real.Emit(opcode, tyarg);
+                    break;
+                case CodeEmitterLocal local:
+                    local.Emit(ilgen_real, opcode);
+                    break;
+                case CodeEmitterLabel label:
+                    ilgen_real.Emit(opcode, label.Label);
+                    break;
+                case CodeEmitterLabel[] labels:
+                    Label[] real = new Label[labels.Length];
+                    for (int i = 0; i < labels.Length; i++)
+                    {
+                        real[i] = labels[i].Label;
+                    }
+                    ilgen_real.Emit(opcode, real);
+                    break;
+                case CalliWrapper calliwarg:
+                    ilgen_real.EmitCalli(opcode, calliwarg.unmanagedCallConv, calliwarg.returnType, calliwarg.parameterTypes);
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unknown request to the dynamic emitter: {arg.GetType()}.");
             }
         }
 
@@ -2689,11 +2669,12 @@ namespace IKVM.Internal
 
         internal void SetLineNumber(ushort line)
         {
-            if (symbols != null)
+            ///XXX: Not currently supported!
+            /*if (symbols != null)
             {
                 EmitPseudoOpCode(CodeType.SequencePoint, (int)line);
             }
-            EmitPseudoOpCode(CodeType.LineNumber, (int)line);
+            EmitPseudoOpCode(CodeType.LineNumber, (int)line);*/
         }
 
         internal byte[] GetLineNumberTable()

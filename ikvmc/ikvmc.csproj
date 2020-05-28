@@ -54,7 +54,6 @@
     <InternalsVisibleTo Include="IKVM.OpenJDK.Media" />
     <InternalsVisibleTo Include="IKVM.OpenJDK.Misc" />
     <InternalsVisibleTo Include="IKVM.OpenJDK.Remoting" />
-    <InternalsVisibleTo Include="IKVM.OpenJDK.SwingAWT" />
   </ItemGroup>
 
   <ItemGroup>

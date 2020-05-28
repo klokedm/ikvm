@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <OutputType>Exe</OutputType>
-    <OutputPath>..\bin\$(Configuration)</OutputPath>
+    <OutputPath>..\..\bin\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

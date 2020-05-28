@@ -674,6 +674,8 @@ namespace IKVM.Reflection
         {
             try
             {
+                if (path.Contains("Windows.Forms"))
+                    throw new InvalidOperationException("Windows Forms based projects are unsupported!");
                 using (RawModule module = OpenRawModule(path))
                 {
                     return LoadAssembly(module);

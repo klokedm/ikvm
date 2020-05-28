@@ -1136,10 +1136,10 @@ final class NetFileSystemProvider extends AbstractFileSystemProvider
 
             public boolean isDirectory()
             {
-                cli.System.Console.WriteLine("Reading directory attribute for: " + info.get_Name());
-                cli.System.Console.WriteLine("Reading directory attribute value: " + (int)(info.get_Attributes().Value));
-                cli.System.Console.WriteLine("Comparing to: " + cli.System.IO.FileAttributes.Directory);
-                cli.System.Console.WriteLine("Result: " + (info.get_Attributes().Value & cli.System.IO.FileAttributes.Directory));
+                //cli.System.Console.WriteLine("Reading directory attribute for: " + info.get_Name());
+                //cli.System.Console.WriteLine("Reading directory attribute value: " + (int)(info.get_Attributes().Value));
+                //cli.System.Console.WriteLine("Comparing to: " + cli.System.IO.FileAttributes.Directory);
+                //cli.System.Console.WriteLine("Result: " + (info.get_Attributes().Value & cli.System.IO.FileAttributes.Directory));
                 return (info.get_Attributes().Value & cli.System.IO.FileAttributes.Directory) != 0;
             }
 

@@ -1102,6 +1102,7 @@ namespace IKVM.Reflection.Reader
 
         public override AssemblyName[] __GetReferencedAssemblies()
         {
+            Console.Error.WriteLine($"Reading assembly list for {this.FullyQualifiedName}");
             List<AssemblyName> list = new List<AssemblyName>();
             for (int i = 0; i < AssemblyRef.records.Length; i++)
             {
@@ -1142,6 +1143,8 @@ namespace IKVM.Reflection.Reader
                     name.hash = GetBlobCopy(AssemblyRef.records[i].HashValue);
                 }
                 name.RawFlags = (AssemblyNameFlags)AssemblyRef.records[i].Flags;
+
+                Console.Error.WriteLine($"Reference is: {name.FullName}");
                 list.Add(name);
             }
             return list.ToArray();

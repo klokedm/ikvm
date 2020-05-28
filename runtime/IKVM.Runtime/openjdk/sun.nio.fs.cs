@@ -34,26 +34,31 @@ static class Java_sun_nio_fs_NetFileSystemProvider
     public static FileStream createFile0(string path, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, int bufferSize, FileOptions fileOptions)
     {
 #if !FIRST_PASS
-        System.Security.AccessControl.FileSecurity security;
+        System.Security.AccessControl.FileSecurity security = null;
         if (System.IO.File.Exists(path))
         {
+            //If the file already exists, we simply retrieve the current security object and use that
             System.IO.FileInfo file = new FileInfo(path);
             security = file.GetAccessControl();
+
         }
         else
         {
-            System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path)));
-            var parentSecurity = directory.GetAccessControl().GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-            security = new System.Security.AccessControl.FileSecurity();
-            foreach (object ruleObject in parentSecurity)
-            {
-                var rule = ruleObject as FileSystemAccessRule;
-                security.AddAccessRule(new FileSystemAccessRule(rule.IdentityReference, rule.FileSystemRights, rule.AccessControlType));
-            }
-
-            security.SetAccessRuleProtection(false, false);
+                //If the file does not exist, it is a little bit more complicated. 
+                Console.Error.WriteLine($"Getting for directory: {path}");
+                Console.Error.WriteLine($"Parent is: {System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path))}");
+                System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path)));
+                Console.Error.WriteLine($"Getting security for: {System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path))}");
+                var parentSecurity = directory.GetAccessControl().GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
+                security = new System.Security.AccessControl.FileSecurity();
+                foreach (object ruleObject in parentSecurity)
+                {
+                    var rule = ruleObject as FileSystemAccessRule;
+                    security.AddAccessRule(new FileSystemAccessRule(rule.IdentityReference, rule.FileSystemRights, rule.AccessControlType));
+                }
+                security.SetAccessRuleProtection(false, false);
         }
-
+        
         return FileSystemAclExtensions.Create(new FileInfo(path), fileMode, fileSystemRights, fileShare, bufferSize, fileOptions, security);
 #else
         return null;

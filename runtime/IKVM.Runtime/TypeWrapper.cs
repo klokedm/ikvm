@@ -3082,7 +3082,7 @@ namespace IKVM.Internal
 				return true;
 			}
 			TypeWrapper subType = this;
-			//TODO: Verify this change, this is currently a hack to compare types by name
+			//TODO: Verify this change, this is currently a hack to compare types by name because of the way reference are handled
 			while(subType.Name != baseType.Name)
 			{
 				subType = subType.BaseTypeWrapper;
